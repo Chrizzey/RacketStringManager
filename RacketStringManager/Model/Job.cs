@@ -12,6 +12,8 @@ namespace RacketStringManager.Model
 
         public string Name { get; set; }
 
+        public string Racket { get; set; }
+
         public double Tension { get; set; }
 
         public string StringName { get; set; }
