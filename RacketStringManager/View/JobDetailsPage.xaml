@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RacketStringManager.View.JobDetailsPage"
+             xmlns:viewModel="clr-namespace:RacketStringManager.ViewModel"
+             xmlns:res="clr-namespace:RacketStringManager.Resources"
+             Title="JobDetailsPage">
+    <StackLayout>
+        <Frame>
+            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="5"  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                <Label Grid.Row="0" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Name}"></Label>
+                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
+                <Label Grid.Row="1" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Racket}"></Label>
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Racket}" />
+                <Label Grid.Row="2" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Tension}"></Label>
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Tension, StringFormat='{0:F1} kg'}" />
+                <Label Grid.Row="3" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_String}"></Label>
+                <Label Grid.Row="3" Grid.Column="1" Text="{Binding StringName}" />
+                <Label Grid.Row="4" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_StartDate}"></Label>
+                <Label Grid.Row="4" Grid.Column="1" Text="{Binding StartDate, StringFormat='{0:dd.MM.yyyy}'}" />
+                <Label Grid.Row="5" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Comment}"></Label>
+                <Label Grid.Row="5" Grid.Column="1" Text="{Binding Comment}" />
+            </Grid>
+        </Frame>
+
+        <CollectionView ItemsSource="{Binding History}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewModel:StringingHistory">
+                    <Frame>
+                        <Grid ColumnSpacing="15"  ColumnDefinitions="Auto,*,*">
+                            <Label Grid.Column="0" Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}"></Label>
+                            <Label Grid.Column="1" Text="{Binding StringName}"></Label>
+                            <Label Grid.Column="2" Text="{Binding Tension, StringFormat='{0:F1} kg'}"></Label>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </StackLayout>
+</ContentPage>

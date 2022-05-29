@@ -4,7 +4,7 @@ namespace RacketStringManager.ViewModel;
 
 public interface IJobViewModelFactory
 {
-    public JobViewModel CreateViewModel(Job job);
+    public JobDetailsViewModel CreateViewModel(Job job);
 
     public JobListViewModel CreateJobListViewModel(Job job);
 }

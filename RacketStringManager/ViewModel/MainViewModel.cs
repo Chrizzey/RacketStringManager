@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Services;
+using RacketStringManager.View;
 using Debug = System.Diagnostics.Debug;
 
 namespace RacketStringManager.ViewModel
@@ -23,7 +24,7 @@ namespace RacketStringManager.ViewModel
             _jobService = jobService;
             _jobViewModelFactory = jobViewModelFactory;
         }
-
+        
         [ICommand]
         private async Task LoadJobs()
         {

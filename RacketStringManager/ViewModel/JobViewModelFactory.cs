@@ -4,7 +4,7 @@ namespace RacketStringManager.ViewModel;
 
 public class JobViewModelFactory : IJobViewModelFactory
 {
-    public JobViewModel CreateViewModel(Job job)
+    public JobDetailsViewModel CreateViewModel(Job job)
     {
         throw new NotImplementedException();
     }

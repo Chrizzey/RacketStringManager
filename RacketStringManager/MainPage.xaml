@@ -11,17 +11,26 @@
 
         <CollectionView Grid.ColumnSpan="2"
                         ItemsSource="{Binding Jobs}"
-                        SelectionMode="Single">
+                        SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:JobListViewModel">
-                    <Grid Padding="10" Grid.ColumnDefinitions="*,Auto, Auto" Grid.RowDefinitions="Auto, Auto">
-                        <Label Grid.Column="0" Grid.Row="0"  Text="{Binding Name}"></Label>
-                        <Label Grid.Column="0" Grid.Row="1"  Text="{Binding Racket}"></Label>
-                        <Label Grid.Column="1" Grid.Row="0" VerticalOptions="Center">Paid</Label>
-                        <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Center">Done</Label>
-                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding IsPaid, Mode=OneWay}" ></CheckBox>
-                        <CheckBox Grid.Column="2" Grid.Row="1" IsChecked="{Binding IsCompleted}"></CheckBox>
-                    </Grid>
+                    <Frame Margin="2">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                CommandParameter="{Binding .}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:JobListViewModel}}, Path=GotoJobDetailsCommand}"
+                                ></TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
+
+                        <Grid Padding="10" Grid.ColumnDefinitions="*,Auto, Auto" Grid.RowDefinitions="Auto, Auto">
+                            <Label Grid.Column="0" Grid.Row="0"  Text="{Binding Name}"></Label>
+                            <Label Grid.Column="0" Grid.Row="1"  Text="{Binding Racket}"></Label>
+                            <Label Grid.Column="1" Grid.Row="0" VerticalOptions="Center">Paid</Label>
+                            <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Center">Done</Label>
+                            <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding IsPaid, Mode=OneWay}" ></CheckBox>
+                            <CheckBox Grid.Column="2" Grid.Row="1" IsChecked="{Binding IsCompleted}"></CheckBox>
+                        </Grid>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
