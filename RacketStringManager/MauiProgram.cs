@@ -66,20 +66,35 @@ public static class MauiProgram
                     Comment = "Lorem ipsum dolor sit amet", StringName = "Yonex BG65",
                     StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-85))
                 },
-
-
+                
                 new Job
                 {
                     JobId = Guid.NewGuid(), Name = "Rüdiger", Racket = "Yonex ArcSaber 11", IsCompleted = true,
-                    IsPaid = true
+                    IsPaid = true, Tension = 10d, StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-95)),
+                    StringName = "Yonex Aerobite Hybrid"
                 },
                 new Job
                 {
-                    JobId = Guid.NewGuid(), Name = "Matthias", Racket = "Victor AL6500", IsCompleted = true, IsPaid = false
+                    JobId = Guid.NewGuid(), Name = "Matthias", Racket = "Victor AL6500", IsCompleted = true, IsPaid = true, 
+                    Tension = 10.5, StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-195)),
+                    StringName = "Yonex Aerobite Hybrid"
                 },
                 new Job
                 {
-                    JobId =Guid.NewGuid(), Name = "Flo", Racket = "Oliver Phantom X9", IsCompleted = false, IsPaid = true
+                    JobId = Guid.NewGuid(), Name = "Matthias", Racket = "Victor AL6500", IsCompleted = true, IsPaid = false, 
+                    Tension = 10.5, StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-15)),
+                    StringName = "Yonex BG65"
+                },
+                new Job
+                {
+                    JobId = Guid.NewGuid(), Name = "Matthias", Racket = "Victor AL6500", IsCompleted = true, IsPaid = true, 
+                    Tension = 10.5, StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-105)),
+                    StringName = "Yonex Aerobite Hybrid"
+                },
+                new Job
+                {
+                    JobId =Guid.NewGuid(), Name = "Flo", Racket = "Oliver Phantom X9", IsCompleted = false, IsPaid = true,
+                    StringName = "Yonex BG65", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-60))
                 }
             };
         }

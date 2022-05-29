@@ -28,6 +28,7 @@ namespace RacketStringManager.ViewModel
         private readonly IJobService _jobService;
 
         private Job _job;
+
         public Job Job
         {
             get => _job;
@@ -47,7 +48,7 @@ namespace RacketStringManager.ViewModel
         [ObservableProperty]
         private string _stringName;
 
-        [ObservableProperty]
+        [ObservableProperty, AlsoNotifyChangeFor(nameof(HasComment))]
         private string _comment;
 
         [ObservableProperty]
@@ -55,6 +56,8 @@ namespace RacketStringManager.ViewModel
 
         [ObservableProperty]
         private DateOnly _startDate;
+
+        public bool HasComment => !string.IsNullOrWhiteSpace(_comment);
 
         public ObservableCollection<StringingHistory> History { get; } = new();
 

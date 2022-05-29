@@ -32,7 +32,7 @@ namespace RacketStringManager.Services
 
         public async Task<IEnumerable<Job>> GetAllJobs()
         {
-            return await _jobRepository.GetAllJobs();
+            return (await _jobRepository.GetAllJobs()).OrderByDescending(x => x.StartDate);
         }
 
         public async Task<IEnumerable<Job>> FindJobsFor(string name)
@@ -43,7 +43,7 @@ namespace RacketStringManager.Services
         public async Task<IEnumerable<Job>> FindJobsFor(string name, string racket)
         {
             var jobs = await FindJobsFor(name);
-            return jobs.Where(x => x.Racket.Equals(racket, StringComparison.CurrentCultureIgnoreCase)).OrderByDescending(x => x.StartDate);
+            return jobs.Where(x => x.Racket.Equals(racket, StringComparison.CurrentCultureIgnoreCase));
         }
     }
 }

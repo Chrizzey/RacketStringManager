@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using AndroidX.Core.Util;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using RacketStringManager.Model;
 using RacketStringManager.Services;
 using RacketStringManager.View;
 using Debug = System.Diagnostics.Debug;
@@ -14,7 +16,7 @@ namespace RacketStringManager.ViewModel
 
         [ObservableProperty, AlsoNotifyChangeFor(nameof(IsNotBusy))]
         private bool _isBusy;
-        
+
         public bool IsNotBusy => !_isBusy;
 
         public ObservableCollection<JobListViewModel> Jobs { get; } = new();
@@ -24,11 +26,22 @@ namespace RacketStringManager.ViewModel
             _jobService = jobService;
             _jobViewModelFactory = jobViewModelFactory;
         }
-        
+
         [ICommand]
-        private async Task LoadJobs()
+        private Task LoadPendingJobs()
         {
-            if(IsBusy)
+            return LoadTask(x => !x.IsCompleted || !x.IsPaid);
+        }
+
+        [ICommand]
+        private Task LoadAllJobs()
+        {
+            return LoadTask(x => true);
+        }
+
+        private async Task LoadTask(Func<Job, bool> filter)
+        {
+            if (IsBusy)
                 return;
 
             try
@@ -36,16 +49,16 @@ namespace RacketStringManager.ViewModel
                 IsBusy = true;
                 var jobs = await _jobService.GetAllJobs();
 
-                if(Jobs.Count != 0)
+                if (Jobs.Count != 0)
                     Jobs.Clear();
 
-                foreach (var job in jobs)
+                foreach (var job in jobs.Where(filter))
                 {
                     var jobVm = _jobViewModelFactory.CreateJobListViewModel(job);
                     Jobs.Add(jobVm);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex);
 

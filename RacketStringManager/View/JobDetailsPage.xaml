@@ -8,18 +8,18 @@
     <StackLayout>
         <Frame>
             <Grid ColumnDefinitions="Auto, *" ColumnSpacing="5"  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
-                <Label Grid.Row="0" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Name}"></Label>
+                <Label Grid.Row="0" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Name}"/>
                 <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
-                <Label Grid.Row="1" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Racket}"></Label>
+                <Label Grid.Row="1" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Racket}"/>
                 <Label Grid.Row="1" Grid.Column="1" Text="{Binding Racket}" />
-                <Label Grid.Row="2" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Tension}"></Label>
+                <Label Grid.Row="2" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Tension}"/>
                 <Label Grid.Row="2" Grid.Column="1" Text="{Binding Tension, StringFormat='{0:F1} kg'}" />
-                <Label Grid.Row="3" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_String}"></Label>
+                <Label Grid.Row="3" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_String}"/>
                 <Label Grid.Row="3" Grid.Column="1" Text="{Binding StringName}" />
-                <Label Grid.Row="4" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_StartDate}"></Label>
+                <Label Grid.Row="4" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_StartDate}"/>
                 <Label Grid.Row="4" Grid.Column="1" Text="{Binding StartDate, StringFormat='{0:dd.MM.yyyy}'}" />
-                <Label Grid.Row="5" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Comment}"></Label>
-                <Label Grid.Row="5" Grid.Column="1" Text="{Binding Comment}" />
+                <Label Grid.Row="5" Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Comment}" IsVisible="{Binding HasComment}"/>
+                <Label Grid.Row="5" Grid.Column="1" Text="{Binding Comment}" IsVisible="{Binding HasComment}"/>
             </Grid>
         </Frame>
 

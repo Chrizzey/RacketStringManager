@@ -36,9 +36,14 @@
         </CollectionView>
 
         <Button Grid.Row="1" Margin="8"
-                Command="{Binding LoadJobsCommand }"
+                Command="{Binding LoadAllJobsCommand }"
                 IsEnabled="{Binding IsNotBusy}"
-                Text="Load Jobs"></Button>
+                Text="All Jobs"></Button>
+
+        <Button Grid.Row="1" Grid.Column="1"  Margin="8"
+                Command="{Binding LoadPendingJobsCommand }"
+                IsEnabled="{Binding IsNotBusy}"
+                Text="Pending Jobs"></Button>
 
         <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
                            HorizontalOptions="FillAndExpand"
