@@ -16,11 +16,23 @@ namespace RacketStringManager.Services
         Task<IEnumerable<Job>> FindJobsFor(string name, string racket);
     }
 
+    public interface IJobRepository
+    {
+        Task<IEnumerable<Job>> GetAllJobs();
+    }
+
     public class JobService : IJobService
     {
+        private readonly IJobRepository _jobRepository;
+
+        public JobService(IJobRepository jobRepository)
+        {
+            _jobRepository = jobRepository;
+        }
+
         public async Task<IEnumerable<Job>> GetAllJobs()
         {
-            throw new NotImplementedException();
+            return await _jobRepository.GetAllJobs();
         }
 
         public async Task<IEnumerable<Job>> FindJobsFor(string name)
@@ -31,7 +43,7 @@ namespace RacketStringManager.Services
         public async Task<IEnumerable<Job>> FindJobsFor(string name, string racket)
         {
             var jobs = await FindJobsFor(name);
-            return jobs.Where(x => x.Racket.Equals(racket, StringComparison.CurrentCultureIgnoreCase));
+            return jobs.Where(x => x.Racket.Equals(racket, StringComparison.CurrentCultureIgnoreCase)).OrderByDescending(x => x.StartDate);
         }
     }
 }

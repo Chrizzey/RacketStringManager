@@ -1,41 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:RacketStringManager.ViewModel"
+             x:DataType="viewModel:MainViewModel"
              x:Class="RacketStringManager.MainPage">
-			 
-    <ScrollView>
-        <VerticalStackLayout 
-            Spacing="25" 
-            Padding="30,0" 
-            VerticalOptions="Center">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-                
-            <Label 
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-            
-            <Label 
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+    <Grid ColumnDefinitions="*,*"
+          ColumnSpacing="5"
+          RowDefinitions="*,Auto">
 
-            <Button 
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+        <CollectionView Grid.ColumnSpan="2"
+                        ItemsSource="{Binding Jobs}"
+                        SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewModel:JobListViewModel">
+                    <Grid Padding="10" Grid.ColumnDefinitions="*,Auto, Auto" Grid.RowDefinitions="Auto, Auto">
+                        <Label Grid.Column="0" Grid.Row="0"  Text="{Binding Name}"></Label>
+                        <Label Grid.Column="0" Grid.Row="1"  Text="{Binding Racket}"></Label>
+                        <Label Grid.Column="1" Grid.Row="0" VerticalOptions="Center">Paid</Label>
+                        <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Center">Done</Label>
+                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding IsPaid, Mode=OneWay}" ></CheckBox>
+                        <CheckBox Grid.Column="2" Grid.Row="1" IsChecked="{Binding IsCompleted}"></CheckBox>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-        </VerticalStackLayout>
-    </ScrollView>
- 
+        <Button Grid.Row="1" Margin="8"
+                Command="{Binding LoadJobsCommand }"
+                IsEnabled="{Binding IsNotBusy}"
+                Text="Load Jobs"></Button>
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.RowSpan="2"
+                           Grid.ColumnSpan="2"></ActivityIndicator>
+    </Grid>
 </ContentPage>

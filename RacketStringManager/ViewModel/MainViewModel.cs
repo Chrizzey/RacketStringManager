@@ -1,32 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Android.OS;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using RacketStringManager.Model;
+using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Services;
 using Debug = System.Diagnostics.Debug;
 
 namespace RacketStringManager.ViewModel
 {
-    public interface IJobViewModelFactory
-    {
-        public JobViewModel CreateViewModel(Job job);
-    }
-
     public partial class MainViewModel : BaseViewModel
     {
         private readonly IJobService _jobService;
         private readonly IJobViewModelFactory _jobViewModelFactory;
 
-        [ObservableProperty]
+        [ObservableProperty, AlsoNotifyChangeFor(nameof(IsNotBusy))]
         private bool _isBusy;
+        
+        public bool IsNotBusy => !_isBusy;
 
-        public ObservableCollection<JobViewModel> Jobs { get; } = new();
+        public ObservableCollection<JobListViewModel> Jobs { get; } = new();
 
         public MainViewModel(IJobService jobService, IJobViewModelFactory jobViewModelFactory)
         {
@@ -34,7 +24,8 @@ namespace RacketStringManager.ViewModel
             _jobViewModelFactory = jobViewModelFactory;
         }
 
-        private async Task LoadJobsAsync()
+        [ICommand]
+        private async Task LoadJobs()
         {
             if(IsBusy)
                 return;
@@ -49,7 +40,7 @@ namespace RacketStringManager.ViewModel
 
                 foreach (var job in jobs)
                 {
-                    var jobVm = _jobViewModelFactory.CreateViewModel(job);
+                    var jobVm = _jobViewModelFactory.CreateJobListViewModel(job);
                     Jobs.Add(jobVm);
                 }
             }
