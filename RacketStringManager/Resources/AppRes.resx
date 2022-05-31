@@ -141,4 +141,16 @@
     <value>Tension</value>
     <comment>The tension of the string</comment>
   </data>
+  <data name="Overview_AllJobs" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Overview_NewJob" xml:space="preserve">
+    <value>New Job</value>
+  </data>
+  <data name="Overview_PendingJobs" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Overview_Title" xml:space="preserve">
+    <value>Overview</value>
+  </data>
 </root>

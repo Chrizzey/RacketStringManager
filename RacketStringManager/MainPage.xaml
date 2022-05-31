@@ -3,13 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:RacketStringManager.ViewModel"
              x:DataType="viewModel:MainViewModel"
-             x:Class="RacketStringManager.MainPage">
+             x:Class="RacketStringManager.MainPage"
+             xmlns:res="clr-namespace:RacketStringManager.Resources"
+             Title="{x:Static res:AppRes.Overview_Title}">
 
     <Grid ColumnDefinitions="*,*"
           ColumnSpacing="5"
-          RowDefinitions="*,Auto">
+          RowDefinitions="Auto,*,Auto">
 
-        <CollectionView Grid.ColumnSpan="2"
+        <Button Grid.Row="0" Grid.ColumnSpan="2" Text="{x:Static res:AppRes.Overview_NewJob}" Margin="8" Command="{Binding GoToNewJobPageCommand}"></Button>
+
+        <CollectionView Grid.Row="1" Grid.ColumnSpan="2"
                         ItemsSource="{Binding Jobs}"
                         SelectionMode="None">
             <CollectionView.ItemTemplate>
@@ -35,15 +39,15 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button Grid.Row="1" Margin="8"
+        <Button Grid.Row="2" Margin="8"
                 Command="{Binding LoadAllJobsCommand }"
                 IsEnabled="{Binding IsNotBusy}"
-                Text="All Jobs"></Button>
+                Text="{x:Static res:AppRes.Overview_AllJobs}"></Button>
 
-        <Button Grid.Row="1" Grid.Column="1"  Margin="8"
+        <Button Grid.Row="2" Grid.Column="1"  Margin="8"
                 Command="{Binding LoadPendingJobsCommand }"
                 IsEnabled="{Binding IsNotBusy}"
-                Text="Pending Jobs"></Button>
+                Text="{x:Static res:AppRes.Overview_PendingJobs}"></Button>
 
         <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
                            HorizontalOptions="FillAndExpand"

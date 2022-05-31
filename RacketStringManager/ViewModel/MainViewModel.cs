@@ -28,6 +28,12 @@ namespace RacketStringManager.ViewModel
         }
 
         [ICommand]
+        private async Task GoToNewJobPage()
+        {
+            await Shell.Current.GoToAsync(nameof(CreateJobPage), true);
+        }
+
+        [ICommand]
         private Task LoadPendingJobs()
         {
             return LoadTask(x => !x.IsCompleted || !x.IsPaid);

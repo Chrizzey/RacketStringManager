@@ -27,6 +27,9 @@ public static class MauiProgram
         builder.Services.AddTransient<JobDetailsPage>();
         builder.Services.AddTransient<JobDetailsViewModel>();
 
+        builder.Services.AddTransient<CreateJobPage>();
+        builder.Services.AddTransient<CreateJobViewModel>();
+
         return builder.Build();
     }
 
@@ -40,62 +43,82 @@ public static class MauiProgram
             {
                 new Job
                 {
-                    JobId = Guid.NewGuid(),
-                    Name = "Tim", Tension = 11.5, Racket = "Yonex ArcSaber 11", IsCompleted = false, IsPaid = false,
-                    Comment = "Lorem ipsum dolor sit amet", StringName = "Yonex BG65",
-                    StartDate = DateOnly.FromDateTime(DateTime.Today)
+                    Name = "Kento Momota", Tension = 15.5, Racket = "Yonex Astrox 99", StringName = "Yonex BG65",
+                    JobId = Guid.NewGuid(),IsCompleted = false, IsPaid = false,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today)
                 },
                 new Job
                 {
-                    JobId = Guid.NewGuid(),
-                    Name = "Tim", Tension = 11.5, Racket = "Yonex ArcSaber 11", IsCompleted = true, IsPaid = true,
-                    Comment = "Lorem ipsum dolor sit amet", StringName = "Yonex BG65",
-                    StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-50))
+                    Name = "Kento Momota", Tension = 15.5, Racket = "Yonex Astrox 99", StringName = "Yonex BG65",
+                    JobId = Guid.NewGuid(),IsCompleted = true, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-18))
                 },
                 new Job
                 {
-                    JobId = Guid.NewGuid(),
-                    Name = "Tim", Tension = 10.5, Racket = "Yonex ArcSaber 11", IsCompleted = true, IsPaid = true,
-                    Comment = "Lorem ipsum dolor sit amet", StringName = "Yonex BG65",
-                    StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-60))
+                    Name = "Kento Momota", Tension = 13.5, Racket = "Yonex Astrox 99", StringName = "Yonex BG80",
+                    JobId = Guid.NewGuid(),IsCompleted = true, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-32))
                 },
                 new Job
                 {
-                    JobId = Guid.NewGuid(),
-                    Name = "Tim", Tension = 10.5, Racket = "Yonex ArcSaber 11", IsCompleted = true, IsPaid = true,
-                    Comment = "Lorem ipsum dolor sit amet", StringName = "Yonex BG65",
-                    StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-85))
-                },
-                
-                new Job
-                {
-                    JobId = Guid.NewGuid(), Name = "Rüdiger", Racket = "Yonex ArcSaber 11", IsCompleted = true,
-                    IsPaid = true, Tension = 10d, StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-95)),
-                    StringName = "Yonex Aerobite Hybrid"
+                    Name = "Kento Momota", Tension = 15, Racket = "Yonex DUORA Z STRIKE", StringName = "Yonex BG80",
+                    JobId = Guid.NewGuid(),IsCompleted = true, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-102))
                 },
                 new Job
                 {
-                    JobId = Guid.NewGuid(), Name = "Matthias", Racket = "Victor AL6500", IsCompleted = true, IsPaid = true, 
-                    Tension = 10.5, StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-195)),
-                    StringName = "Yonex Aerobite Hybrid"
+                    Name = "Kento Momota", Tension = 15, Racket = "Yonex DUORA Z STRIKE", StringName = "Yonex BG65",
+                    JobId = Guid.NewGuid(),IsCompleted = true, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-132))
                 },
                 new Job
                 {
-                    JobId = Guid.NewGuid(), Name = "Matthias", Racket = "Victor AL6500", IsCompleted = true, IsPaid = false, 
-                    Tension = 10.5, StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-15)),
-                    StringName = "Yonex BG65"
+                    Name = "Viktor Axelsen", Tension = 18.5, Racket = "Yonex Astrox 100 ZZ", StringName = "Yonex BG80",
+                    JobId = Guid.NewGuid(),IsCompleted = false, IsPaid = false,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-2))
                 },
                 new Job
                 {
-                    JobId = Guid.NewGuid(), Name = "Matthias", Racket = "Victor AL6500", IsCompleted = true, IsPaid = true, 
-                    Tension = 10.5, StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-105)),
-                    StringName = "Yonex Aerobite Hybrid"
+                    Name = "Viktor Axelsen", Tension = 15.5, Racket = "Yonex Astrox 100 ZZ", StringName = "Yonex BG80",
+                    JobId = Guid.NewGuid(),IsCompleted = true, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-12))
                 },
                 new Job
                 {
-                    JobId =Guid.NewGuid(), Name = "Flo", Racket = "Oliver Phantom X9", IsCompleted = false, IsPaid = true,
-                    StringName = "Yonex BG65", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-60))
-                }
+                    Name = "Viktor Axelsen", Tension = 13.5, Racket = "Yonex Astrox 100 ZZ", StringName = "Yonex BG80",
+                    JobId = Guid.NewGuid(),IsCompleted = true, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-22))
+                },
+                new Job
+                {
+                    Name = "Mark Lamsfuß", Tension = 18, Racket = "Yonex Astrox 88S", StringName = "Yonex Aerobite",
+                    JobId = Guid.NewGuid(),IsCompleted = false, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-10))
+                },
+                new Job
+                {
+                    Name = "Mark Lamsfuß", Tension = 17.5, Racket = "Yonex Astrox 88S", StringName = "Yonex Aerobite",
+                    JobId = Guid.NewGuid(),IsCompleted = true, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-24))
+                },
+                new Job
+                {
+                    Name = "Mark Lamsfuß", Tension = 18, Racket = "Yonex Astrox 88S", StringName = "Yonex Aerobite",
+                    JobId = Guid.NewGuid(),IsCompleted = true, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-34))
+                },
+                new Job
+                {
+                    Name = "Mark Lamsfuß", Tension = 17.5, Racket = "Yonex Astrox 88S", StringName = "Yonex Aerobite",
+                    JobId = Guid.NewGuid(),IsCompleted = true, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-44))
+                },
+                new Job
+                {
+                    Name = "Mark Lamsfuß", Tension = 16, Racket = "Yonex Astrox 88S", StringName = "Yonex Aerobite",
+                    JobId = Guid.NewGuid(),IsCompleted = true, IsPaid = true,
+                    Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-64))
+                },
             };
         }
 

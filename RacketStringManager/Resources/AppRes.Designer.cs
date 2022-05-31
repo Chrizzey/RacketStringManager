@@ -113,5 +113,41 @@ namespace RacketStringManager.Resources {
                 return ResourceManager.GetString("JobDetails_Tension", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        internal static string Overview_AllJobs {
+            get {
+                return ResourceManager.GetString("Overview_AllJobs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Job.
+        /// </summary>
+        internal static string Overview_NewJob {
+            get {
+                return ResourceManager.GetString("Overview_NewJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        internal static string Overview_PendingJobs {
+            get {
+                return ResourceManager.GetString("Overview_PendingJobs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overview.
+        /// </summary>
+        internal static string Overview_Title {
+            get {
+                return ResourceManager.GetString("Overview_Title", resourceCulture);
+            }
+        }
     }
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:RacketStringManager.ViewModel"
+             x:Class="RacketStringManager.View.CreateJobPage"
+             Title="CreateJobPage">
+    <VerticalStackLayout>
+        <Grid ColumnDefinitions="Auto, *, Auto" Margin="5" ColumnSpacing="10"  RowDefinitions="Auto, Auto, Auto, Auto, Auto, *">
+            <Label Grid.Row="0" Grid.Column="0" Text="Name:" VerticalOptions="Center"/>
+            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Placeholder="Enter the Name" ClearButtonVisibility="WhileEditing" ReturnType="Next" />
+            <Button Grid.Row="0" Grid.Column="2" Text="Go" Margin="2,15" Command="{Binding ReloadHistoryCommand}"></Button>
+
+            <Label Grid.Row="1" Grid.Column="0" Text="Racket:" VerticalOptions="Center"/>
+            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Racket}" Placeholder="Enter the Racket" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
+            <Button Grid.Row="1" Grid.Column="2" Text="Go" Margin="2,15" Command="{Binding ReloadHistoryCommand}"></Button>
+
+            <Label Grid.Row="2" Grid.Column="0" Text="String:" VerticalOptions="Center"/>
+            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding StringName}" Placeholder="Enter the String" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
+
+            <Label Grid.Row="3" Grid.Column="0" Text="Tension:" VerticalOptions="Center"/>
+            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Tension}" Placeholder="Enter the Tension" Keyboard="Numeric" ReturnType="Next"/>
+
+            <Label Grid.Row="4" Grid.Column="0" Text="Comment:" VerticalOptions="Center"/>
+            <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Comment}" Placeholder="Enter a Comment" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
+        </Grid>
+        <CollectionView ItemsSource="{Binding History}" Background="Pink">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewModel:StringingHistory">
+                    <Frame HorizontalOptions="Fill">
+                        <Grid ColumnSpacing="15"  ColumnDefinitions="Auto,*,*">
+                            <Label Grid.Column="0" Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}"></Label>
+                            <Label Grid.Column="1" Text="{Binding StringName}"></Label>
+                            <Label Grid.Column="2" Text="{Binding Tension, StringFormat='{0:F1} kg'}"></Label>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>
