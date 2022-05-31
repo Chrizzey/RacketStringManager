@@ -9,7 +9,7 @@ using Debug = System.Diagnostics.Debug;
 
 namespace RacketStringManager.ViewModel
 {
-    public partial class MainViewModel : BaseViewModel
+    public partial class MainViewModel : ObservableObject
     {
         private readonly IJobService _jobService;
         private readonly IJobViewModelFactory _jobViewModelFactory;

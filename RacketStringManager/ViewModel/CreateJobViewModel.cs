@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using RacketStringManager.Model;
 using RacketStringManager.Services;
 
 namespace RacketStringManager.ViewModel

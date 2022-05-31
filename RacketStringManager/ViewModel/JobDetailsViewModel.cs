@@ -6,24 +6,8 @@ using RacketStringManager.Services;
 
 namespace RacketStringManager.ViewModel
 {
-    public class StringingHistory
-    {
-        public DateOnly Date { get; }
-
-        public string StringName { get; }
-
-        public double Tension { get; }
-
-        public StringingHistory(Job job)
-        {
-            Date = job.StartDate;
-            StringName = job.StringName;
-            Tension = job.Tension;
-        }
-    }
-
     [QueryProperty(nameof(Job), "Job")]
-    public partial class JobDetailsViewModel : BaseViewModel
+    public partial class JobDetailsViewModel : ObservableObject
     {
         private readonly IJobService _jobService;
 

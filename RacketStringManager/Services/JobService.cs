@@ -1,26 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RacketStringManager.Model;
+﻿using RacketStringManager.Model;
 
 namespace RacketStringManager.Services
 {
-    public interface IJobService
-    {
-        Task<IEnumerable<Job>> GetAllJobs();
-
-        Task<IEnumerable<Job>> FindJobsFor(string name);
-
-        Task<IEnumerable<Job>> FindJobsFor(string name, string racket);
-    }
-
-    public interface IJobRepository
-    {
-        Task<IEnumerable<Job>> GetAllJobs();
-    }
-
     public class JobService : IJobService
     {
         private readonly IJobRepository _jobRepository;
