@@ -19,8 +19,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        builder.Services.AddSingleton<IJobService, JobService>();
-        builder.Services.AddSingleton<IJobRepository, TestJobRepository>();
+        builder.Services.AddSingleton<IJobRepository, JobRepository>();
         builder.Services.AddSingleton<IJobViewModelFactory, JobViewModelFactory>();
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<MainPage>();
@@ -123,9 +122,23 @@ public static class MauiProgram
             };
         }
 
-        public Task<IEnumerable<Job>> GetAllJobs()
+        public IEnumerable<Job> GetAllJobs()
         {
-            return Task.FromResult(_jobs);
+            return _jobs;
+        }
+
+        public IEnumerable<Job> FindJobsFor(string player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Job> FindJobsFor(string player, string racket)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

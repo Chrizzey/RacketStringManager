@@ -2,13 +2,13 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
-using RacketStringManager.Services;
+using RacketStringManager.Services.Repository;
 
 namespace RacketStringManager.ViewModel
 {
     public partial class CreateJobViewModel : ObservableObject
     {
-        private readonly IJobService _jobService;
+        private readonly IJobRepository _jobService;
 
         [ObservableProperty]
         private string _name;
@@ -25,9 +25,9 @@ namespace RacketStringManager.ViewModel
         [ObservableProperty] 
         private string _tension;
 
-        public ObservableCollection<StringingHistory> History { get; } = new();
+        public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
-        public CreateJobViewModel(IJobService jobService)
+        public CreateJobViewModel(IJobRepository jobService)
         {
             _jobService = jobService;
         }
@@ -39,7 +39,7 @@ namespace RacketStringManager.ViewModel
         }
 
         [ICommand]
-        private async Task ReloadHistory()
+        private void ReloadHistory()
         {
             if(string.IsNullOrWhiteSpace(Name))
                 return;
@@ -51,9 +51,9 @@ namespace RacketStringManager.ViewModel
                 ? _jobService.FindJobsFor(Name)
                 : _jobService.FindJobsFor(Name, Racket);
 
-            foreach (var job in await jobs)
+            foreach (var job in jobs)
             {
-                History.Add(new StringingHistory(job));
+                History.Add(new StringingHistoryViewModel(new StringingHistory(job)));
             }
         }
     }

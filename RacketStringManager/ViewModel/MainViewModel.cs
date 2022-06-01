@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
 using RacketStringManager.Services;
+using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
 using Debug = System.Diagnostics.Debug;
 
@@ -11,7 +12,7 @@ namespace RacketStringManager.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
-        private readonly IJobService _jobService;
+        private readonly IJobRepository _jobService;
         private readonly IJobViewModelFactory _jobViewModelFactory;
 
         [ObservableProperty, AlsoNotifyChangeFor(nameof(IsNotBusy))]
@@ -21,7 +22,7 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<JobListViewModel> Jobs { get; } = new();
 
-        public MainViewModel(IJobService jobService, IJobViewModelFactory jobViewModelFactory)
+        public MainViewModel(IJobRepository jobService, IJobViewModelFactory jobViewModelFactory)
         {
             _jobService = jobService;
             _jobViewModelFactory = jobViewModelFactory;
@@ -53,7 +54,7 @@ namespace RacketStringManager.ViewModel
             try
             {
                 IsBusy = true;
-                var jobs = await _jobService.GetAllJobs();
+                var jobs = _jobService.GetAllJobs();
 
                 if (Jobs.Count != 0)
                     Jobs.Clear();

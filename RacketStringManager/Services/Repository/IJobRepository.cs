@@ -4,5 +4,9 @@ namespace RacketStringManager.Services.Repository;
 
 public interface IJobRepository : IDisposable
 {
-    Task<IEnumerable<Job>> GetAllJobs();
+    IEnumerable<Job> GetAllJobs();
+
+    IEnumerable<Job> FindJobsFor(string player);
+
+    IEnumerable<Job> FindJobsFor(string player, string racket);
 }

@@ -1,4 +1,6 @@
-﻿using RacketStringManager.Model;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
+using RacketStringManager.Model;
 using SQLite;
 
 namespace RacketStringManager.Services.Repository
@@ -87,6 +89,16 @@ namespace RacketStringManager.Services.Repository
         public IEnumerable<Job> GetAllJobs()
         {
             return _database.Table<JobEntity>().Select(EntityToJob);
+        }
+
+        public IEnumerable<Job> FindJobsFor(string player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Job> FindJobsFor(string player, string racket)
+        {
+            throw new NotImplementedException();
         }
 
         private Job EntityToJob(JobEntity jobEntity)
