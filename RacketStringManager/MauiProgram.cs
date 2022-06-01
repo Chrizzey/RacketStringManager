@@ -1,5 +1,6 @@
 ﻿using RacketStringManager.Model;
 using RacketStringManager.Services;
+using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
 using RacketStringManager.ViewModel;
 

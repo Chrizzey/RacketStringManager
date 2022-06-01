@@ -1,4 +1,5 @@
 ﻿using RacketStringManager.Model;
+using RacketStringManager.Services.Repository;
 
 namespace RacketStringManager.Services
 {

@@ -36,11 +36,6 @@
         /// Gets or sets a flag indicating if the stringinig jobs is completed
         /// </summary>
         public bool IsCompleted { get; set; }
-    
-        /// <summary>
-        /// Gets or sets the date on which the job was finished
-        /// </summary>
-        public DateOnly EndDate { get; set; }
 
         /// <summary>
         /// Gets or sets a flag indicating if the jobs was paid in full
