@@ -19,7 +19,8 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        builder.Services.AddSingleton<IJobRepository, JobRepository>();
+        builder.Services.AddRepositories();
+        
         builder.Services.AddSingleton<IJobViewModelFactory, JobViewModelFactory>();
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<MainPage>();
@@ -32,7 +33,7 @@ public static class MauiProgram
 
         return builder.Build();
     }
-
+    
     private class TestJobRepository : IJobRepository
     {
         private IEnumerable<Job> _jobs;
@@ -137,9 +138,28 @@ public static class MauiProgram
             throw new NotImplementedException();
         }
 
+        public int Create(Job job)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Dispose()
         {
         }
     }
 }
 
+public static class ServiceBuilderExtensions
+{
+    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddSingleton<IJobRepository, JobRepository>();
+        services.AddSingleton<IPlayerRepository, PlayerRepository>();
+        services.AddSingleton<IRacketRepository, RacketRepository>();
+        services.AddSingleton<IStringingRepository, StringingRepository>();
+        
+        services.AddSingleton<IAsyncJobRepository, AsyncJobRepository>();
+
+        return services;
+    }
+}

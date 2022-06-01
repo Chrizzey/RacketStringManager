@@ -23,7 +23,7 @@
             <Label Grid.Row="4" Grid.Column="0" Text="Comment:" VerticalOptions="Center"/>
             <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Comment}" Placeholder="Enter a Comment" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
         </Grid>
-        <CollectionView ItemsSource="{Binding History}" Background="Pink">
+        <CollectionView ItemsSource="{Binding History}" Margin="5">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:StringingHistoryViewModel">
                     <Frame HorizontalOptions="Fill">
@@ -36,5 +36,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Button Margin="5" Command="{Binding SaveCommand}" Text="Save"></Button>
     </VerticalStackLayout>
 </ContentPage>
