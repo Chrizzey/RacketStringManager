@@ -2,7 +2,7 @@
 
 namespace RacketStringManager.Services.Repository;
 
-public interface IJobRepository
+public interface IJobRepository : IDisposable
 {
     Task<IEnumerable<Job>> GetAllJobs();
 }
