@@ -1,13 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using RacketStringManager.Services;
+using RacketStringManager.Model;
+using RacketStringManager.Services.Repository;
 
 namespace RacketStringManager.ViewModel
 {
     public partial class CreateJobViewModel : ObservableObject
     {
-        private readonly IJobService _jobService;
+        private readonly IJobRepository _jobRepository;
 
         [ObservableProperty]
         private string _name;
@@ -24,21 +25,34 @@ namespace RacketStringManager.ViewModel
         [ObservableProperty] 
         private string _tension;
 
-        public ObservableCollection<StringingHistory> History { get; } = new();
+        public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
-        public CreateJobViewModel(IJobService jobService)
+        public CreateJobViewModel(IJobRepository jobRepository)
         {
-            _jobService = jobService;
+            _jobRepository = jobRepository;
         }
 
         [ICommand]
-        private async Task Save()
+        private void Save()
         {
-            throw new NotImplementedException();
+            var job = new Job
+            {
+                Name = Name,
+                Racket = Racket,
+                Tension = double.Parse(Tension),
+                Comment = Comment,
+                StartDate = DateOnly.FromDateTime(DateTime.Today),
+                IsPaid = false,
+                IsCompleted = false
+            };
+
+            _jobRepository.Create(job);
+
+            Shell.Current.GoToAsync("..");
         }
 
         [ICommand]
-        private async Task ReloadHistory()
+        private void ReloadHistory()
         {
             if(string.IsNullOrWhiteSpace(Name))
                 return;
@@ -47,12 +61,12 @@ namespace RacketStringManager.ViewModel
                 History.Clear();
 
             var jobs = string.IsNullOrWhiteSpace(Racket)
-                ? _jobService.FindJobsFor(Name)
-                : _jobService.FindJobsFor(Name, Racket);
+                ? _jobRepository.FindJobsFor(Name)
+                : _jobRepository.FindJobsFor(Name, Racket);
 
-            foreach (var job in await jobs)
+            foreach (var job in jobs)
             {
-                History.Add(new StringingHistory(job));
+                History.Add(new StringingHistoryViewModel(new StringingHistory(job)));
             }
         }
     }

@@ -1,46 +1,9 @@
-﻿using RacketStringManager.Model;
-using RacketStringManager.Services;
-using RacketStringManager.Services.Repository;
-using RacketStringManager.View;
-using RacketStringManager.ViewModel;
-
-namespace RacketStringManager;
-
-public static class MauiProgram
+﻿namespace RacketStringManager.Tests
 {
-    public static MauiApp CreateMauiApp()
+    // All the code in this file is included in all platforms.
+    public class Class1
     {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
-
-        builder.Services.AddRepositories();
-        
-        builder.Services.AddSingleton<IJobViewModelFactory, JobViewModelFactory>();
-        builder.Services.AddSingleton<MainViewModel>();
-        builder.Services.AddSingleton<MainPage>();
-
-        builder.Services.AddTransient<JobDetailsPage>();
-        builder.Services.AddTransient<JobDetailsViewModel>();
-
-        builder.Services.AddTransient<CreateJobPage>();
-        builder.Services.AddTransient<CreateJobViewModel>();
-
-        return builder.Build();
-    }
-    
-    private class TestJobRepository : IJobRepository
-    {
-        private IEnumerable<Job> _jobs;
-
-        public TestJobRepository()
-        {
-            _jobs = new[]
+        private readonly Job[] _jobs = new[]
             {
                 new Job
                 {
@@ -121,45 +84,113 @@ public static class MauiProgram
                     Comment = "Lorem ipsum dolor sit amet", StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-64))
                 },
             };
-        }
 
-        public IEnumerable<Job> GetAllJobs()
-        {
-            return _jobs;
-        }
-
-        public IEnumerable<Job> FindJobsFor(string player)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Job> FindJobsFor(string player, string racket)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Create(Job job)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-        }
-    }
-}
-
-public static class ServiceBuilderExtensions
-{
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
-    {
-        services.AddSingleton<IJobRepository, JobRepository>();
-        services.AddSingleton<IPlayerRepository, PlayerRepository>();
-        services.AddSingleton<IRacketRepository, RacketRepository>();
-        services.AddSingleton<IStringingRepository, StringingRepository>();
+        private JobRepository _repository;
         
-        services.AddSingleton<IAsyncJobRepository, AsyncJobRepository>();
+        [SetUp]
+        public void Setup()
+        {
+            _repository = new JobRepository();
+            _repository.Clear();
+            foreach (var job in _jobs)
+            {
+                _repository.Create(job);
+            }
+        }
 
-        return services;
+        [TearDown]
+        public void TearDown()
+        {
+            _repository.Dispose();
+        }
+
+        [Test]
+        public void T01()
+        {
+            _repository.Clear();
+            foreach (var job in _jobs)
+            {
+                _repository.Create(job);
+            }
+
+            var all = _repository.GetAllJobs();
+
+            Assert.AreEqual(_jobs.Length, all.Count());
+        }
+
+        [Test]
+        public async  Task T02()
+        {
+            //_repository.Clear();
+            //foreach (var job in _jobs)
+            //{
+            //    _repository.Update(new JobEntity(job));
+            //}
+
+            //var all = await _repository.GetAllJobs();
+
+            //Assert.AreEqual(0, all.Count());
+        }
+
+        [Test]
+        public void FindById()
+        {
+            var expected = _repository.GetAllJobs().FirstOrDefault();
+            Assert.IsNotNull(expected);
+
+            var actual = _repository.Find(expected.JobId);
+
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.Tension, actual.Tension);
+        }
+
+        [Test]
+        public void DeleteById()
+        {
+            var expected = _repository.GetAllJobs().FirstOrDefault();
+            Assert.IsNotNull(expected);
+
+            _repository.Delete(expected);
+            
+            Assert.IsNull(_repository.Find(expected.JobId));
+        }
+
+        [Test]
+        public void GetAllPlayers()
+        {
+            var expected = _jobs.Select(x => x.Name).Distinct();
+
+            var actual = _repository.GetAllPlayerNames();
+            
+            CollectionAssert.AreEquivalent(expected, actual);
+        }
+
+        [Test]
+        public void GetAllStrings()
+        {
+            var expected = _jobs.Select(x => x.StringName).Distinct();
+
+            var actual = _repository.GetAllStringNames();
+            
+            CollectionAssert.AreEquivalent(expected, actual);
+        }
+
+        [Test]
+        public void GetAllRacketsForPlayer()
+        {
+            var players = _jobs.Select(x => x.Name).Distinct();
+
+            foreach (var player in players)
+            {
+                var expected = _jobs
+                    .Where(x => x.Name == player)
+                    .Select(x => x.Racket).Distinct();
+
+                var actual = _repository.GetAllRacketsForPlayer(player);
+
+                CollectionAssert.AreEquivalent(expected, actual, "unexpected racket for player " + player);
+            }
+        }
     }
 }

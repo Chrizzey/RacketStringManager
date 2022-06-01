@@ -2,30 +2,14 @@
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using RacketStringManager.Model;
-using RacketStringManager.Services;
+using RacketStringManager.Services.Repository;
 
 namespace RacketStringManager.ViewModel
 {
-    public class StringingHistory
-    {
-        public DateOnly Date { get; }
-
-        public string StringName { get; }
-
-        public double Tension { get; }
-
-        public StringingHistory(Job job)
-        {
-            Date = job.StartDate;
-            StringName = job.StringName;
-            Tension = job.Tension;
-        }
-    }
-
     [QueryProperty(nameof(Job), "Job")]
-    public partial class JobDetailsViewModel : BaseViewModel
+    public partial class JobDetailsViewModel : ObservableObject
     {
-        private readonly IJobService _jobService;
+        private readonly IJobRepository _jobService;
 
         private Job _job;
 
@@ -59,9 +43,9 @@ namespace RacketStringManager.ViewModel
 
         public bool HasComment => !string.IsNullOrWhiteSpace(_comment);
 
-        public ObservableCollection<StringingHistory> History { get; } = new();
+        public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
-        public JobDetailsViewModel(IJobService jobService)
+        public JobDetailsViewModel(IJobRepository jobService)
         {
             _jobService = jobService;
         }
@@ -75,9 +59,9 @@ namespace RacketStringManager.ViewModel
             StartDate = Job.StartDate;
             Tension = Job.Tension;
 
-            var history =  _jobService.FindJobsFor(Name, Racket).GetAwaiter().GetResult().ToArray();
+            var history = _jobService.FindJobsFor(Name, Racket).ToArray();
 
-            if(History.Count != 0)
+            if (History.Count != 0)
                 History.Clear();
 
             try
@@ -87,7 +71,7 @@ namespace RacketStringManager.ViewModel
                     if (entry.JobId == Job.JobId)
                         continue;
 
-                    History.Add(new StringingHistory(entry));
+                    History.Add(new StringingHistoryViewModel(new StringingHistory(entry)));
                 }
             }
             catch (Exception ex)
