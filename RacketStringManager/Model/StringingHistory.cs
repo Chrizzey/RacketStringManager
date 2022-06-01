@@ -8,8 +8,11 @@ public class StringingHistory
 
     public double Tension { get; }
 
+    public Job StringingJob {get;}
+    
     public StringingHistory(Job job)
     {
+        StringingJob = job;
         Date = job.StartDate;
         StringName = job.StringName;
         Tension = job.Tension;
