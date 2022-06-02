@@ -63,6 +63,69 @@ namespace RacketStringManager.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Comment.
         /// </summary>
+        internal static string CreateJob_Comment {
+            get {
+                return ResourceManager.GetString("CreateJob_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string CreateJob_Name {
+            get {
+                return ResourceManager.GetString("CreateJob_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Racket.
+        /// </summary>
+        internal static string CreateJob_Racket {
+            get {
+                return ResourceManager.GetString("CreateJob_Racket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string CreateJob_Save {
+            get {
+                return ResourceManager.GetString("CreateJob_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String.
+        /// </summary>
+        internal static string CreateJob_String {
+            get {
+                return ResourceManager.GetString("CreateJob_String", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tension.
+        /// </summary>
+        internal static string CreateJob_Tension {
+            get {
+                return ResourceManager.GetString("CreateJob_Tension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Job.
+        /// </summary>
+        internal static string CreateJob_Title {
+            get {
+                return ResourceManager.GetString("CreateJob_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
         internal static string JobDetails_Comment {
             get {
                 return ResourceManager.GetString("JobDetails_Comment", resourceCulture);

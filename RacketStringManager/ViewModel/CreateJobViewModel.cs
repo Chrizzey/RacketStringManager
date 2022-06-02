@@ -12,19 +12,26 @@ namespace RacketStringManager.ViewModel
         private readonly IJobRepository _jobRepository;
 
         [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(CanSave))]
         private string _name;
         
         [ObservableProperty]
         private string _comment;
         
         [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(CanSave))]
         private string _racket;
         
         [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(CanSave))]
         private string _stringName;
 
-        [ObservableProperty] 
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(CanSave))]
         private string _tension;
+
+        public bool CanSave => 
+            !(string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Racket) || string.IsNullOrWhiteSpace(StringName) || string.IsNullOrWhiteSpace(Tension));
 
         public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
@@ -60,7 +67,7 @@ namespace RacketStringManager.ViewModel
 
             return value;
         }
-
+        
         [ICommand]
         private void ReloadHistory()
         {

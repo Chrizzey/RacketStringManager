@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreateJob_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="CreateJob_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="CreateJob_Racket" xml:space="preserve">
+    <value>Racket</value>
+  </data>
+  <data name="CreateJob_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="CreateJob_String" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="CreateJob_Tension" xml:space="preserve">
+    <value>Tension</value>
+  </data>
+  <data name="CreateJob_Title" xml:space="preserve">
+    <value>New Job</value>
+  </data>
   <data name="JobDetails_Comment" xml:space="preserve">
     <value>Comment</value>
     <comment>Additional comments for the job</comment>
