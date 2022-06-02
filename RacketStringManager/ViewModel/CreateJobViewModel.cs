@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
@@ -38,8 +39,9 @@ namespace RacketStringManager.ViewModel
             var job = new Job
             {
                 Name = Name,
+                StringName = StringName,
                 Racket = Racket,
-                Tension = double.Parse(Tension),
+                Tension = ParseTension(),
                 Comment = Comment,
                 StartDate = DateOnly.FromDateTime(DateTime.Today),
                 IsPaid = false,
@@ -49,6 +51,14 @@ namespace RacketStringManager.ViewModel
             _jobRepository.Create(job);
 
             Shell.Current.GoToAsync("..");
+        }
+
+        private double ParseTension()
+        {
+            var tension = Tension.Replace(",", ".");
+            double.TryParse(tension, NumberStyles.Any, CultureInfo.InvariantCulture, out var value);
+
+            return value;
         }
 
         [ICommand]

@@ -20,6 +20,9 @@ namespace RacketStringManager.ViewModel
         public StringingHistoryViewModel(StringingHistory model)
         {
             _model = model;
+            _date = _model.Date;
+            _stringName = _model.StringName;
+            _tension = _model.Tension;
         }
 
         [ICommand]

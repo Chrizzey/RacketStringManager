@@ -34,7 +34,7 @@ namespace RacketStringManager.Services.Repository
             if(playerEntity is null)
                 yield break;
 
-            var query = $"select * from {nameof(JobEntity)} where {nameof(JobEntity.PlayerId)} == {playerEntity.Id}";
+            var query = $"select * from {nameof(JobEntity)} where {nameof(JobEntity.PlayerId)} == '{playerEntity.Id}'";
             foreach (var job in Database.Query<JobEntity>(query))
             {
                 yield return EntityToJob(job);
@@ -51,7 +51,7 @@ namespace RacketStringManager.Services.Repository
             if (racketEntity is null)
                 yield break;
 
-            var query = $"select * from {nameof(JobEntity)} where {nameof(JobEntity.PlayerId)} == {playerEntity.Id} and {nameof(JobEntity.RacketId)} == {racketEntity.Id}";
+            var query = $"select * from {nameof(JobEntity)} where {nameof(JobEntity.PlayerId)} == '{playerEntity.Id}' and {nameof(JobEntity.RacketId)} == '{racketEntity.Id}'";
             foreach (var job in Database.Query<JobEntity>(query))
             {
                 yield return EntityToJob(job);
@@ -143,10 +143,10 @@ namespace RacketStringManager.Services.Repository
         }
         private StringEntity FindOrInsertString(Job job)
         {
-            var stringEntity = _stringRepository.Find(job.Name);
+            var stringEntity = _stringRepository.Find(job.StringName);
             if (stringEntity is null)
             {
-                stringEntity = new StringEntity {Name = job.Name};
+                stringEntity = new StringEntity {Name = job.StringName };
                 _stringRepository.Insert(stringEntity);
             }
 

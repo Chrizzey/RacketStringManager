@@ -1,9 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using AndroidX.Core.Util;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
-using RacketStringManager.Services;
 using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
 using Debug = System.Diagnostics.Debug;
@@ -26,6 +24,8 @@ namespace RacketStringManager.ViewModel
         {
             _jobService = jobService;
             _jobViewModelFactory = jobViewModelFactory;
+
+            LoadPendingJobsCommand.Execute(null);
         }
 
         [ICommand]
