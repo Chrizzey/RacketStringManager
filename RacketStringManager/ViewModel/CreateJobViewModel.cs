@@ -11,17 +11,19 @@ namespace RacketStringManager.ViewModel
     {
         private readonly IJobRepository _jobRepository;
 
+        private double _tensionInKg;
+
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(CanSave))]
         private string _name;
-        
+
         [ObservableProperty]
         private string _comment;
-        
+
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(CanSave))]
         private string _racket;
-        
+
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(CanSave))]
         private string _stringName;
@@ -30,8 +32,8 @@ namespace RacketStringManager.ViewModel
         [AlsoNotifyChangeFor(nameof(CanSave))]
         private string _tension;
 
-        public bool CanSave => 
-            !(string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Racket) || string.IsNullOrWhiteSpace(StringName) || string.IsNullOrWhiteSpace(Tension));
+        public bool CanSave =>
+            !(string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Racket) || string.IsNullOrWhiteSpace(StringName)) && ParseTension();
 
         public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
@@ -48,7 +50,7 @@ namespace RacketStringManager.ViewModel
                 Name = Name,
                 StringName = StringName,
                 Racket = Racket,
-                Tension = ParseTension(),
+                Tension = _tensionInKg,
                 Comment = Comment,
                 StartDate = DateOnly.FromDateTime(DateTime.Today),
                 IsPaid = false,
@@ -60,21 +62,19 @@ namespace RacketStringManager.ViewModel
             Shell.Current.GoToAsync("..");
         }
 
-        private double ParseTension()
+        private bool ParseTension()
         {
-            var tension = Tension.Replace(",", ".");
-            double.TryParse(tension, NumberStyles.Any, CultureInfo.InvariantCulture, out var value);
-
-            return value;
+            var tension = Tension?.Replace(",", ".");
+            return double.TryParse(tension, NumberStyles.Any, CultureInfo.InvariantCulture, out _tensionInKg);
         }
-        
+
         [ICommand]
         private void ReloadHistory()
         {
-            if(string.IsNullOrWhiteSpace(Name))
+            if (string.IsNullOrWhiteSpace(Name))
                 return;
 
-            if(History.Count != 0)
+            if (History.Count != 0)
                 History.Clear();
 
             var jobs = string.IsNullOrWhiteSpace(Racket)
