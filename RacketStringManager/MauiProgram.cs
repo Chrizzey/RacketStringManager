@@ -20,20 +20,20 @@ public static class MauiProgram
             });
 
         builder.Services.AddRepositories();
-        
+
         builder.Services.AddSingleton<IJobViewModelFactory, JobViewModelFactory>();
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<MainPage>();
 
-        builder.Services.AddTransient<JobDetailsPage>();
-        builder.Services.AddTransient<JobDetailsViewModel>();
-
-        builder.Services.AddTransient<CreateJobPage>();
-        builder.Services.AddTransient<CreateJobViewModel>();
-
+        builder
+            .AddPageWithViewModel<JobDetailsPage, JobDetailsViewModel>()
+            .AddPageWithViewModel<CreateJobPage, CreateJobViewModel>()
+            .AddPageWithViewModel<EditJobPage, EditJobViewModel>()
+            ;
+        
         return builder.Build();
     }
-    
+
     private class TestJobRepository : IJobRepository
     {
         private IEnumerable<Job> _jobs;
@@ -157,9 +157,19 @@ public static class ServiceBuilderExtensions
         services.AddSingleton<IPlayerRepository, PlayerRepository>();
         services.AddSingleton<IRacketRepository, RacketRepository>();
         services.AddSingleton<IStringingRepository, StringingRepository>();
-        
+
         services.AddSingleton<IAsyncJobRepository, AsyncJobRepository>();
 
         return services;
+    }
+
+    public static MauiAppBuilder AddPageWithViewModel<TPage, TViewModel>(this MauiAppBuilder builder) 
+        where TPage : class 
+        where TViewModel : class
+    {
+        builder.Services.AddTransient<TPage>();
+        builder.Services.AddTransient<TViewModel>();
+
+        return builder;
     }
 }

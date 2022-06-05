@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
 using RacketStringManager.Services.Repository;
+using RacketStringManager.View;
 
 namespace RacketStringManager.ViewModel
 {
@@ -48,6 +50,15 @@ namespace RacketStringManager.ViewModel
         public JobDetailsViewModel(IJobRepository jobService)
         {
             _jobService = jobService;
+        }
+
+        [ICommand]
+        private async Task GotoEditJobPage()
+        {
+            await Shell.Current.GoToAsync(nameof(EditJobPage), true, new Dictionary<string, object>
+            {
+                {"Job", _job}
+            });
         }
 
         private void UpdateProperties()
