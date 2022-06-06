@@ -11,7 +11,7 @@ namespace RacketStringManager.ViewModel
     [QueryProperty(nameof(Job), "Job")]
     public partial class JobDetailsViewModel : ObservableObject
     {
-        private readonly IJobRepository _jobService;
+        private readonly IJobRepository _jobRepository;
 
         private Job _job;
 
@@ -20,7 +20,8 @@ namespace RacketStringManager.ViewModel
             get => _job;
             set
             {
-                SetProperty(ref _job, value);
+                var job = _jobRepository.Find(value.JobId);
+                SetProperty(ref _job, job);
                 UpdateProperties();
             }
         }
@@ -47,9 +48,9 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
-        public JobDetailsViewModel(IJobRepository jobService)
+        public JobDetailsViewModel(IJobRepository jobRepository)
         {
-            _jobService = jobService;
+            _jobRepository = jobRepository;
         }
 
         [ICommand]
@@ -70,7 +71,7 @@ namespace RacketStringManager.ViewModel
             StartDate = Job.StartDate;
             Tension = Job.Tension;
 
-            var history = _jobService.FindJobsFor(Name, Racket).ToArray();
+            var history = _jobRepository.FindJobsFor(Name, Racket).ToArray();
 
             if (History.Count != 0)
                 History.Clear();

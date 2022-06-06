@@ -165,7 +165,7 @@ namespace RacketStringManager.Services.Repository
             return stringEntity;
         }
 
-        public Job? Find(Guid id)
+        public Job Find(Guid id)
         {
             var entity = Database.Find<JobEntity>(id);
             return entity is null ? null : EntityToJob(entity);

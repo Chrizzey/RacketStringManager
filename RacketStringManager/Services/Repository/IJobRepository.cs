@@ -21,6 +21,7 @@ public interface IJobRepository : IDisposable
     IEnumerable<Job> FindJobsFor(string player, string racket);
     int Create(Job job);
     int Update(Job job);
+    Job Find(Guid id);
 }
 
 public class AsyncJobRepository : IAsyncJobRepository

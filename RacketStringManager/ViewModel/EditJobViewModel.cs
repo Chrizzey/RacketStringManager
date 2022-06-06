@@ -35,6 +35,12 @@ namespace RacketStringManager.ViewModel
         [AlsoNotifyChangeFor(nameof(CanSave))]
         private string _tension;
 
+        [ObservableProperty] 
+        private bool _isPaid;
+        
+        [ObservableProperty] 
+        private bool _isCompleted;
+
         public bool CanSave =>
             !(string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Racket) || string.IsNullOrWhiteSpace(StringName)) && ParseTension();
 
@@ -46,7 +52,8 @@ namespace RacketStringManager.ViewModel
             get => _job;
             set
             {
-                SetProperty(ref _job, value);
+                var job = _jobRepository.Find(value.JobId);
+                SetProperty(ref _job, job);
                 UpdateProperties();
             }
         }
@@ -63,8 +70,8 @@ namespace RacketStringManager.ViewModel
                 Tension = _tensionInKg,
                 Comment = Comment,
                 StartDate = DateOnly.FromDateTime(DateTime.Today),
-                IsPaid = false,
-                IsCompleted = false
+                IsPaid = _isPaid,
+                IsCompleted = IsCompleted
             };
 
             _jobRepository.Update(job);
@@ -108,6 +115,8 @@ namespace RacketStringManager.ViewModel
             StringName = Job.StringName;
             Comment = Job.Comment;
             Tension = Job.Tension.ToString("F1");
+            IsPaid = Job.IsPaid;
+            IsCompleted = Job.IsCompleted;
 
             var history = _jobRepository.FindJobsFor(Name, Racket).ToArray();
 

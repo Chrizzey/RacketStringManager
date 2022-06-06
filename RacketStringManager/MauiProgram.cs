@@ -20,10 +20,9 @@ public static class MauiProgram
         builder.Services.AddRepositories();
 
         builder.Services.AddSingleton<IJobViewModelFactory, JobViewModelFactory>();
-        builder.Services.AddSingleton<MainViewModel>();
-        builder.Services.AddSingleton<MainPage>();
-
+       
         builder
+            .AddPageWithViewModel<MainPage, MainViewModel>()
             .AddPageWithViewModel<JobDetailsPage, JobDetailsViewModel>()
             .AddPageWithViewModel<CreateJobPage, CreateJobViewModel>()
             .AddPageWithViewModel<EditJobPage, EditJobViewModel>()
