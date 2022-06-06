@@ -3,6 +3,7 @@ using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
+using RacketStringManager.Resources;
 using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
 
@@ -60,6 +61,21 @@ namespace RacketStringManager.ViewModel
             {
                 {"Job", _job}
             });
+        }
+
+        [ICommand]
+        private async Task DeleteJob()
+        {
+            var answer = await Shell.Current.DisplayAlert(
+                AppRes.JobDetails_DeleteConfirm_Title, 
+                AppRes.JobDetails_DeleteConfirm_Message,
+                AppRes.JobDetails_DeleteConfirm_Accept,
+                AppRes.JobDetails_DeleteConfirm_Cancel);
+            if(!answer)
+                return;
+
+            _jobRepository.Delete(_job);
+            await Shell.Current.GoToAsync("..");
         }
 
         private void UpdateProperties()

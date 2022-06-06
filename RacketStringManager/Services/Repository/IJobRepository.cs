@@ -22,6 +22,7 @@ public interface IJobRepository : IDisposable
     int Create(Job job);
     int Update(Job job);
     Job Find(Guid id);
+    int Delete(Job job);
 }
 
 public class AsyncJobRepository : IAsyncJobRepository

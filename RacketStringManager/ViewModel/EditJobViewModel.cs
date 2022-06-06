@@ -59,7 +59,7 @@ namespace RacketStringManager.ViewModel
         }
 
         [ICommand]
-        private void Save()
+        private async Task Save()
         {
             var job = new Job
             {
@@ -76,7 +76,7 @@ namespace RacketStringManager.ViewModel
 
             _jobRepository.Update(job);
 
-            Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("..");
         }
 
         public EditJobViewModel(IJobRepository repository)
