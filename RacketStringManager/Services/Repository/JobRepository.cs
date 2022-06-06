@@ -84,6 +84,13 @@ namespace RacketStringManager.Services.Repository
 
         public int Create(Job job)
         {
+            var jobEntity = JobToJobEntity(job);
+
+            return Database.Insert(jobEntity);
+        }
+
+        private JobEntity JobToJobEntity(Job job)
+        {
             var jobEntity = new JobEntity(job);
 
             if (job.GetPlayerId == Guid.Empty)
@@ -116,7 +123,7 @@ namespace RacketStringManager.Services.Repository
                 jobEntity.StringId = job.GetStringId;
             }
 
-            return Database.Insert(jobEntity);
+            return jobEntity;
         }
 
         private PlayerEntity FindOrInsertPlayer(Job job)
@@ -180,8 +187,10 @@ namespace RacketStringManager.Services.Repository
             return Database.Query<RacketEntity>(query).Select(x => x.Name);
         }
 
-        public int Update(JobEntity entity)
+        public int Update(Job job)
         {
+            var entity = JobToJobEntity(job);
+
             return Database.Update(entity);
         }
 
