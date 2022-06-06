@@ -1,4 +1,5 @@
 ﻿using RacketStringManager.Model;
+using RacketStringManager.Model.Entities;
 
 namespace RacketStringManager.Services.Repository;
 
@@ -19,11 +20,13 @@ public interface IJobRepository : IDisposable
 
     IEnumerable<Job> FindJobsFor(string player, string racket);
     int Create(Job job);
+    int Update(Job job);
+    Job Find(Guid id);
 }
 
 public class AsyncJobRepository : IAsyncJobRepository
 {
-    private IJobRepository _jobRepository;
+    private readonly IJobRepository _jobRepository;
 
     public AsyncJobRepository(IJobRepository jobRepository)
     {

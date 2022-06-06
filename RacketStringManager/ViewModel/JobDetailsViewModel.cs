@@ -1,15 +1,17 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
 using RacketStringManager.Services.Repository;
+using RacketStringManager.View;
 
 namespace RacketStringManager.ViewModel
 {
     [QueryProperty(nameof(Job), "Job")]
     public partial class JobDetailsViewModel : ObservableObject
     {
-        private readonly IJobRepository _jobService;
+        private readonly IJobRepository _jobRepository;
 
         private Job _job;
 
@@ -18,7 +20,8 @@ namespace RacketStringManager.ViewModel
             get => _job;
             set
             {
-                SetProperty(ref _job, value);
+                var job = _jobRepository.Find(value.JobId);
+                SetProperty(ref _job, job);
                 UpdateProperties();
             }
         }
@@ -45,9 +48,18 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
-        public JobDetailsViewModel(IJobRepository jobService)
+        public JobDetailsViewModel(IJobRepository jobRepository)
         {
-            _jobService = jobService;
+            _jobRepository = jobRepository;
+        }
+
+        [ICommand]
+        private async Task GotoEditJobPage()
+        {
+            await Shell.Current.GoToAsync(nameof(EditJobPage), true, new Dictionary<string, object>
+            {
+                {"Job", _job}
+            });
         }
 
         private void UpdateProperties()
@@ -59,7 +71,7 @@ namespace RacketStringManager.ViewModel
             StartDate = Job.StartDate;
             Tension = Job.Tension;
 
-            var history = _jobService.FindJobsFor(Name, Racket).ToArray();
+            var history = _jobRepository.FindJobsFor(Name, Racket).ToArray();
 
             if (History.Count != 0)
                 History.Clear();

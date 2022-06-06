@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using RacketStringManager.Model;
 
 namespace RacketStringManager.Model.Entities;
 
