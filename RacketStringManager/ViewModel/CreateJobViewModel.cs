@@ -83,7 +83,7 @@ namespace RacketStringManager.ViewModel
 
             foreach (var job in jobs)
             {
-                History.Add(new StringingHistoryViewModel(new StringingHistory(job)));
+                History.Add(new StringingHistoryViewModel(job));
             }
         }
     }

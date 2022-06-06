@@ -107,12 +107,11 @@ namespace RacketStringManager.ViewModel
                     if (entry.JobId == Job.JobId)
                         continue;
 
-                    History.Add(new StringingHistoryViewModel(new StringingHistory(entry)));
+                    History.Add(new StringingHistoryViewModel(entry));
                 }
             }
             catch (Exception ex)
             {
-
                 Debug.WriteLine(ex);
 
                 // Todo: Abstract this UI call

@@ -7,12 +7,12 @@ namespace RacketStringManager.ViewModel
 {
     public partial class StringingHistoryViewModel : ObservableObject
     {
-        private readonly StringingHistory _model;
+        private readonly Job _model;
 
         [ObservableProperty]
         private DateOnly _date;
 
-        [ObservableProperty] 
+        [ObservableProperty]
         private string _stringName;
 
         [ObservableProperty]
@@ -23,13 +23,13 @@ namespace RacketStringManager.ViewModel
         [ObservableProperty, AlsoNotifyChangeFor(nameof(HasComment))]
         private string _comment;
 
-        public StringingHistoryViewModel(StringingHistory model)
+        public StringingHistoryViewModel(Job model)
         {
             _model = model;
-            _date = _model.Date;
+            _date = _model.StartDate;
             _stringName = _model.StringName;
             _tension = _model.Tension;
-            _comment = _model.StringingJob.Comment;
+            _comment = _model.Comment;
         }
 
         [ICommand]
@@ -37,7 +37,7 @@ namespace RacketStringManager.ViewModel
         {
             await Shell.Current.GoToAsync(nameof(JobDetailsPage), true, new Dictionary<string, object>
             {
-                {"Job", _model.StringingJob}
+                {"Job", _model}
             });
         }
     }
