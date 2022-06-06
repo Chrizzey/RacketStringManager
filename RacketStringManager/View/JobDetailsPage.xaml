@@ -21,7 +21,7 @@
             <Label Grid.Row="5" Grid.Column="1" Text="{Binding Comment}" IsVisible="{Binding HasComment}"/>
         </Grid>
         <Grid ColumnDefinitions="*,*" Padding="5" ColumnSpacing="5">
-            <Button Grid.Column="0" Text="Delete"></Button>
+            <Button Grid.Column="0" Command="{Binding DeleteJobCommand}" Text="Delete"></Button>
             <Button Grid.Column="1" Command="{Binding GotoEditJobPageCommand}" Text="Edit"></Button>
         </Grid>
         <CollectionView ItemsSource="{Binding History}">

@@ -62,6 +62,17 @@ namespace RacketStringManager.ViewModel
             });
         }
 
+        [ICommand]
+        private async Task DeleteJob()
+        {
+            var answer = await Shell.Current.DisplayAlert("Delete Job?", "Do you really want to delete the job?", "Yes", "No");
+            if(!answer)
+                return;
+
+            _jobRepository.Delete(_job);
+            await Shell.Current.GoToAsync("..");
+        }
+
         private void UpdateProperties()
         {
             Name = Job.Name;
