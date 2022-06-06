@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
+using RacketStringManager.Services;
 using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
 using Debug = System.Diagnostics.Debug;
@@ -12,6 +13,8 @@ namespace RacketStringManager.ViewModel
     {
         private readonly IJobRepository _jobService;
         private readonly IJobViewModelFactory _jobViewModelFactory;
+        private readonly IUiService _uiService;
+        private readonly INavigationService _navigationService;
 
         [ObservableProperty]
         private bool _showsOpenJobsOnly;
@@ -23,19 +26,19 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<JobListViewModel> Jobs { get; } = new();
 
-        public MainViewModel(IJobRepository jobService, IJobViewModelFactory jobViewModelFactory)
+        public MainViewModel(IJobRepository jobService, IJobViewModelFactory jobViewModelFactory, IUiService uiService, INavigationService navigationService)
         {
             _jobService = jobService;
             _jobViewModelFactory = jobViewModelFactory;
+            _uiService = uiService;
+            _navigationService = navigationService;
             _showsOpenJobsOnly = true;
-
-            //LoadPendingJobsCommand.Execute(null);
         }
 
         [ICommand]
         private async Task GoToNewJobPage()
         {
-            await Shell.Current.GoToAsync(nameof(CreateJobPage), true);
+            await _navigationService.GoToCreateJobPage();
         }
 
         [ICommand]
@@ -79,7 +82,7 @@ namespace RacketStringManager.ViewModel
                 Debug.WriteLine(ex);
 
                 // Todo: Abstract this UI call
-                await Shell.Current.DisplayAlert("Error!", "Unable to load jobs from cache", "OK");
+                await _uiService.DisplayAlertAsync("Error!", "Unable to load jobs from cache", "OK");
             }
             finally
             {
