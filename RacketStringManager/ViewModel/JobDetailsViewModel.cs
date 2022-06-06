@@ -3,6 +3,7 @@ using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
+using RacketStringManager.Resources;
 using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
 
@@ -65,7 +66,11 @@ namespace RacketStringManager.ViewModel
         [ICommand]
         private async Task DeleteJob()
         {
-            var answer = await Shell.Current.DisplayAlert("Delete Job?", "Do you really want to delete the job?", "Yes", "No");
+            var answer = await Shell.Current.DisplayAlert(
+                AppRes.JobDetails_DeleteConfirm_Title, 
+                AppRes.JobDetails_DeleteConfirm_Message,
+                AppRes.JobDetails_DeleteConfirm_Accept,
+                AppRes.JobDetails_DeleteConfirm_Cancel);
             if(!answer)
                 return;
 

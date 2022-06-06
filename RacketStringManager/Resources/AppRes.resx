@@ -142,6 +142,24 @@
     <value>Comment</value>
     <comment>Additional comments for the job</comment>
   </data>
+  <data name="JobDetails_DeleteConfirm_Accept" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="JobDetails_DeleteConfirm_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="JobDetails_DeleteConfirm_Message" xml:space="preserve">
+    <value>Do you really want to delete the job?</value>
+  </data>
+  <data name="JobDetails_DeleteConfirm_Title" xml:space="preserve">
+    <value>Delete Job?</value>
+  </data>
+  <data name="JobDetails_DeleteJob" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="JobDetails_EditJob" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="JobDetails_Name" xml:space="preserve">
     <value>Name</value>
     <comment>The name of the client</comment>

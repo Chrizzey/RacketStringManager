@@ -133,6 +133,60 @@ namespace RacketStringManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string JobDetails_DeleteConfirm_Accept {
+            get {
+                return ResourceManager.GetString("JobDetails_DeleteConfirm_Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string JobDetails_DeleteConfirm_Cancel {
+            get {
+                return ResourceManager.GetString("JobDetails_DeleteConfirm_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete the job?.
+        /// </summary>
+        internal static string JobDetails_DeleteConfirm_Message {
+            get {
+                return ResourceManager.GetString("JobDetails_DeleteConfirm_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Job?.
+        /// </summary>
+        internal static string JobDetails_DeleteConfirm_Title {
+            get {
+                return ResourceManager.GetString("JobDetails_DeleteConfirm_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string JobDetails_DeleteJob {
+            get {
+                return ResourceManager.GetString("JobDetails_DeleteJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string JobDetails_EditJob {
+            get {
+                return ResourceManager.GetString("JobDetails_EditJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string JobDetails_Name {
