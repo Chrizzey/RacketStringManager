@@ -1,4 +1,5 @@
-﻿using RacketStringManager.Services.Repository;
+﻿using RacketStringManager.Services;
+using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
 using RacketStringManager.ViewModel;
 
@@ -20,6 +21,8 @@ public static class MauiProgram
         builder.Services.AddRepositories();
 
         builder.Services.AddSingleton<IJobViewModelFactory, JobViewModelFactory>()
+            .AddSingleton<IUiService, UiService>()
+            .AddSingleton<INavigationService, NavigationService>()
             .AddTransient<MainPage>()
             .AddSingleton<MainViewModel>();
        

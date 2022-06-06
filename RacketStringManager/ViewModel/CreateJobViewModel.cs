@@ -3,6 +3,7 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
+using RacketStringManager.Services;
 using RacketStringManager.Services.Repository;
 
 namespace RacketStringManager.ViewModel
@@ -10,6 +11,7 @@ namespace RacketStringManager.ViewModel
     public partial class CreateJobViewModel : ObservableObject
     {
         private readonly IJobRepository _jobRepository;
+        private readonly IUiService _uiService;
 
         private double _tensionInKg;
 
@@ -37,9 +39,10 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
-        public CreateJobViewModel(IJobRepository jobRepository)
+        public CreateJobViewModel(IJobRepository jobRepository, IUiService uiService)
         {
             _jobRepository = jobRepository;
+            _uiService = uiService;
         }
 
         [ICommand]
@@ -59,7 +62,7 @@ namespace RacketStringManager.ViewModel
 
             _jobRepository.Create(job);
 
-            Shell.Current.GoToAsync("..");
+            _uiService.GoBackAsync();
         }
 
         private bool ParseTension()

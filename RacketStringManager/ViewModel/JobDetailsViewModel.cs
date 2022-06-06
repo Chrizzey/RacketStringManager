@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
 using RacketStringManager.Resources;
+using RacketStringManager.Services;
 using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
 
@@ -13,6 +14,8 @@ namespace RacketStringManager.ViewModel
     public partial class JobDetailsViewModel : ObservableObject
     {
         private readonly IJobRepository _jobRepository;
+        private readonly IUiService _uiService;
+        private readonly INavigationService _navigationService;
 
         private Job _job;
 
@@ -49,33 +52,32 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
-        public JobDetailsViewModel(IJobRepository jobRepository)
+        public JobDetailsViewModel(IJobRepository jobRepository, IUiService uiService, INavigationService navigationService)
         {
             _jobRepository = jobRepository;
+            _uiService = uiService;
+            _navigationService = navigationService;
         }
 
         [ICommand]
         private async Task GotoEditJobPage()
         {
-            await Shell.Current.GoToAsync(nameof(EditJobPage), true, new Dictionary<string, object>
-            {
-                {"Job", _job}
-            });
+            await _navigationService.GotoEditJobPage(_job);
         }
 
         [ICommand]
         private async Task DeleteJob()
         {
-            var answer = await Shell.Current.DisplayAlert(
-                AppRes.JobDetails_DeleteConfirm_Title, 
+            var answer = await _uiService.GetUserConfirmation(
+                AppRes.JobDetails_DeleteConfirm_Title,
                 AppRes.JobDetails_DeleteConfirm_Message,
                 AppRes.JobDetails_DeleteConfirm_Accept,
                 AppRes.JobDetails_DeleteConfirm_Cancel);
-            if(!answer)
+            if (!answer)
                 return;
 
             _jobRepository.Delete(_job);
-            await Shell.Current.GoToAsync("..");
+            await _uiService.GoBackAsync();
         }
 
         private void UpdateProperties()
@@ -108,7 +110,7 @@ namespace RacketStringManager.ViewModel
                 Debug.WriteLine(ex);
 
                 // Todo: Abstract this UI call
-                Shell.Current.DisplayAlert("Error!", "Unable to load jobs from cache", "OK");
+                _uiService.DisplayAlertAsync("Error!", "Unable to load jobs from cache", "OK");
             }
         }
     }

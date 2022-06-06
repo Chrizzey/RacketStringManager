@@ -4,6 +4,7 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
+using RacketStringManager.Services;
 using RacketStringManager.Services.Repository;
 
 namespace RacketStringManager.ViewModel
@@ -13,6 +14,7 @@ namespace RacketStringManager.ViewModel
     {
         private Job _job;
         private readonly IJobRepository _jobRepository;
+        private readonly IUiService _uiService;
 
         private double _tensionInKg;
 
@@ -76,12 +78,13 @@ namespace RacketStringManager.ViewModel
 
             _jobRepository.Update(job);
 
-            await Shell.Current.GoToAsync("..");
+            await _uiService.GoBackAsync();
         }
 
-        public EditJobViewModel(IJobRepository repository)
+        public EditJobViewModel(IJobRepository repository, IUiService uiService)
         {
             _jobRepository = repository;
+            _uiService = uiService;
         }
 
         private bool ParseTension()
@@ -139,7 +142,7 @@ namespace RacketStringManager.ViewModel
                 Debug.WriteLine(ex);
 
                 // Todo: Abstract this UI call
-                Shell.Current.DisplayAlert("Error!", "Unable to load jobs from cache", "OK");
+                _uiService.DisplayAlertAsync("Error!", "Unable to load jobs from cache", "OK");
             }
         }
     }

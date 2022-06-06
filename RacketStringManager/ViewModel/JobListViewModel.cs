@@ -1,12 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
+using RacketStringManager.Services;
 using RacketStringManager.View;
 
 namespace RacketStringManager.ViewModel;
 
 public partial class JobListViewModel : ObservableObject
 {
+    private readonly INavigationService _navigationService;
     public Job Job { get; }
 
     [ObservableProperty]
@@ -21,8 +23,9 @@ public partial class JobListViewModel : ObservableObject
     [ObservableProperty]
     private bool _isPaid;
     
-    public JobListViewModel(Job job)
+    public JobListViewModel(Job job, INavigationService navigationService)
     {
+        _navigationService = navigationService;
         Job = job;
 
         _name = job.Name;
@@ -37,10 +40,6 @@ public partial class JobListViewModel : ObservableObject
         if (viewModel is null)
             return;
 
-        // Todo: Abstract this UI call
-        await Shell.Current.GoToAsync(nameof(JobDetailsPage), true, new Dictionary<string, object>()
-        {
-            {"Job", viewModel.Job}
-        });
+        await _navigationService.GoToJobDetailsPage(viewModel.Job);
     }
 }
