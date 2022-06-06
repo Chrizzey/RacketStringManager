@@ -25,7 +25,7 @@ namespace RacketStringManager.Services.Repository
 
         public IEnumerable<Job> GetAllJobs()
         {
-            return Database.Table<JobEntity>().Select(EntityToJob);
+            return Database.Table<JobEntity>().OrderByDescending(x => x.StartDate).Select(EntityToJob);
         }
 
         public IEnumerable<Job> FindJobsFor(string player)

@@ -13,6 +13,9 @@ namespace RacketStringManager.ViewModel
         private readonly IJobRepository _jobService;
         private readonly IJobViewModelFactory _jobViewModelFactory;
 
+        [ObservableProperty]
+        private bool _showsOpenJobsOnly;
+
         [ObservableProperty, AlsoNotifyChangeFor(nameof(IsNotBusy))]
         private bool _isBusy;
 
@@ -24,8 +27,9 @@ namespace RacketStringManager.ViewModel
         {
             _jobService = jobService;
             _jobViewModelFactory = jobViewModelFactory;
+            _showsOpenJobsOnly = true;
 
-            LoadPendingJobsCommand.Execute(null);
+            //LoadPendingJobsCommand.Execute(null);
         }
 
         [ICommand]
@@ -37,16 +41,19 @@ namespace RacketStringManager.ViewModel
         [ICommand]
         private Task LoadPendingJobs()
         {
-            return LoadTask(x => !x.IsCompleted || !x.IsPaid);
+            _showsOpenJobsOnly = true;
+            return LoadJobs();
         }
 
         [ICommand]
         private Task LoadAllJobs()
         {
-            return LoadTask(x => true);
+            _showsOpenJobsOnly = false;
+            return LoadJobs();
         }
 
-        private async Task LoadTask(Func<Job, bool> filter)
+        [ICommand]
+        private async Task LoadJobs()
         {
             if (IsBusy)
                 return;
@@ -58,6 +65,8 @@ namespace RacketStringManager.ViewModel
 
                 if (Jobs.Count != 0)
                     Jobs.Clear();
+
+                var filter = _showsOpenJobsOnly ? new Func<Job, bool>(x => !x.IsCompleted || !x.IsPaid) : x => true;
 
                 foreach (var job in jobs.Where(filter))
                 {
