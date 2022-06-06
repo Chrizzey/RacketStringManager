@@ -9,7 +9,7 @@
 
     <Grid ColumnDefinitions="*,*"
           ColumnSpacing="5"
-          RowDefinitions="Auto,*,Auto">
+          RowDefinitions="Auto,*,Auto, Auto">
 
         <Button Grid.Row="0" Grid.ColumnSpan="2" Text="{x:Static res:AppRes.Overview_NewJob}" Margin="8" Command="{Binding GoToNewJobPageCommand}"></Button>
 
@@ -48,6 +48,8 @@
                 Command="{Binding LoadPendingJobsCommand }"
                 IsEnabled="{Binding IsNotBusy}"
                 Text="{x:Static res:AppRes.Overview_PendingJobs}"></Button>
+
+        <Button Grid.Row="3" Command="{Binding ExportDatabaseCommand}" Text="Export to Excel"></Button>
 
         <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
                            HorizontalOptions="FillAndExpand"

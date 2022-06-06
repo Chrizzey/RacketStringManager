@@ -1,4 +1,5 @@
 ﻿using RacketStringManager.Services;
+using RacketStringManager.Services.Export;
 using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
 using RacketStringManager.ViewModel;
@@ -31,7 +32,9 @@ public static class MauiProgram
             .AddPageWithViewModel<CreateJobPage, CreateJobViewModel>()
             .AddPageWithViewModel<EditJobPage, EditJobViewModel>()
             ;
-        
+
+        builder.Services.AddSingleton<ExcelExportService>();
+
         return builder.Build();
     }
 }
