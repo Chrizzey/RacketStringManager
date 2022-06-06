@@ -69,7 +69,7 @@ namespace RacketStringManager.ViewModel
                 Racket = Racket,
                 Tension = _tensionInKg,
                 Comment = Comment,
-                StartDate = DateOnly.FromDateTime(DateTime.Today),
+                StartDate = Job.StartDate,
                 IsPaid = _isPaid,
                 IsCompleted = IsCompleted
             };
