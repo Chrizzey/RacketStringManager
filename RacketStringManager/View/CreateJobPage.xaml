@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModel="clr-namespace:RacketStringManager.ViewModel"
-             x:Class="RacketStringManager.View.CreateJobPage"
              xmlns:res="clr-namespace:RacketStringManager.Resources"
+             xmlns:com="clr-namespace:RacketStringManager.View.Components"
+             x:Class="RacketStringManager.View.CreateJobPage"
              Title="{x:Static res:AppRes.CreateJob_Title}">
     <VerticalStackLayout>
         <Grid ColumnDefinitions="Auto, *, Auto" Margin="5" ColumnSpacing="10"  RowDefinitions="Auto, Auto, Auto, Auto, Auto, *">
@@ -25,18 +25,6 @@
             <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Comment}" Placeholder="Enter a Comment" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
         </Grid>
         <Button Margin="5" Command="{Binding SaveCommand}" Text="{x:Static res:AppRes.CreateJob_Save}" IsEnabled="{Binding CanSave}"></Button>
-        <CollectionView ItemsSource="{Binding History}" Margin="5">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="viewModel:StringingHistoryViewModel">
-                    <Frame HorizontalOptions="Fill">
-                        <Grid ColumnSpacing="15"  ColumnDefinitions="Auto,*,*">
-                            <Label Grid.Column="0" Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}"></Label>
-                            <Label Grid.Column="1" Text="{Binding StringName}"></Label>
-                            <Label Grid.Column="2" Text="{Binding Tension, StringFormat='{0:F1} kg'}"></Label>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <com:StringingHistory BindingContext="{Binding History}"></com:StringingHistory>
     </VerticalStackLayout>
 </ContentPage>

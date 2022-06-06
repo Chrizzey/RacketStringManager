@@ -4,6 +4,7 @@
              x:Class="RacketStringManager.View.JobDetailsPage"
              xmlns:viewModel="clr-namespace:RacketStringManager.ViewModel"
              xmlns:res="clr-namespace:RacketStringManager.Resources"
+             xmlns:com="clr-namespace:RacketStringManager.View.Components"
              Title="JobDetailsPage">
     <StackLayout>
         <Grid Padding="5"  ColumnDefinitions="Auto, *" ColumnSpacing="5"  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
@@ -24,19 +25,8 @@
             <Button Grid.Column="0" Command="{Binding DeleteJobCommand}" Text="{x:Static res:AppRes.JobDetails_DeleteJob}"></Button>
             <Button Grid.Column="1" Command="{Binding GotoEditJobPageCommand}" Text="{x:Static res:AppRes.JobDetails_EditJob}"></Button>
         </Grid>
-        <CollectionView ItemsSource="{Binding History}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="viewModel:StringingHistoryViewModel">
-                    <Frame Padding="10" Margin="2,0,0,0">
-                        <Grid ColumnSpacing="15"  ColumnDefinitions="Auto,*,*">
-                            <Label Grid.Column="0" Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}"></Label>
-                            <Label Grid.Column="1" Text="{Binding StringName}"></Label>
-                            <Label Grid.Column="2" Text="{Binding Tension, StringFormat='{0:F1} kg'}"></Label>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+
+        <com:StringingHistory BindingContext="{Binding History}"></com:StringingHistory>
 
     </StackLayout>
 </ContentPage>
