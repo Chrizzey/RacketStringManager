@@ -8,10 +8,12 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:StringingHistoryViewModel">
                     <Frame HorizontalOptions="Fill" Padding="25,10,5,10" Margin="0,1">
-                        <Grid ColumnSpacing="15"  ColumnDefinitions="Auto,*,*">
+                        <Grid ColumnSpacing="15"  ColumnDefinitions="Auto,*,*" RowDefinitions="Auto, Auto">
                             <Label Grid.Column="0" Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}"></Label>
                             <Label Grid.Column="1" Text="{Binding StringName}"></Label>
                             <Label Grid.Column="2" Text="{Binding Tension, StringFormat='{0:F1} kg'}"></Label>
+
+                            <Label Grid.Column="0" Grid.ColumnSpan ="3" Grid.Row="1" Text="{Binding Comment}" IsVisible="{Binding HasComment}"></Label>
                         </Grid>
                     </Frame>
                 </DataTemplate>

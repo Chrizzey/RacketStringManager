@@ -45,6 +45,12 @@ namespace RacketStringManager.ViewModel
         [ObservableProperty]
         private DateOnly _startDate;
 
+        [ObservableProperty]
+        private bool _isPaid;
+
+        [ObservableProperty] 
+        private bool _isCompleted;
+
         public bool HasComment => !string.IsNullOrWhiteSpace(_comment);
 
         public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
@@ -86,6 +92,8 @@ namespace RacketStringManager.ViewModel
             Comment = Job.Comment;
             StartDate = Job.StartDate;
             Tension = Job.Tension;
+            IsPaid = Job.IsPaid;
+            IsCompleted = Job.IsCompleted;
 
             var history = _jobRepository.FindJobsFor(Name, Racket).ToArray();
 
