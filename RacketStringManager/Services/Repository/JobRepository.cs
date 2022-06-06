@@ -93,6 +93,11 @@ namespace RacketStringManager.Services.Repository
         {
             var jobEntity = new JobEntity(job);
 
+            if (job.JobId != Guid.Empty)
+            {
+                jobEntity.Id = job.JobId;
+            }
+
             if (job.GetPlayerId == Guid.Empty)
             {
                 var player = FindOrInsertPlayer(job);
