@@ -94,9 +94,9 @@ namespace RacketStringManager.ViewModel
         }
 
         [ICommand]
-        private void ExportDatabase()
+        private async Task ExportDatabase()
         {
-            _exportService.Export();
+            await _exportService.Export();
         }
     }
 }
