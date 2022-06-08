@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
 using RacketStringManager.View;
@@ -7,7 +8,7 @@ namespace RacketStringManager.ViewModel
 {
     public partial class StringingHistoryViewModel : ObservableObject
     {
-        private readonly Job _model;
+        private readonly Job _job;
 
         [ObservableProperty]
         private DateOnly _date;
@@ -23,22 +24,18 @@ namespace RacketStringManager.ViewModel
         [ObservableProperty, AlsoNotifyChangeFor(nameof(HasComment))]
         private string _comment;
 
-        public StringingHistoryViewModel(Job model)
+        [ObservableProperty]
+        private ICommand _command;
+
+        public StringingHistoryViewModel(Job job)
         {
-            _model = model;
-            _date = _model.StartDate;
-            _stringName = _model.StringName;
-            _tension = _model.Tension;
-            _comment = _model.Comment;
+            _job = job;
+            _date = _job.StartDate;
+            _stringName = _job.StringName;
+            _tension = _job.Tension;
+            _comment = _job.Comment;
         }
 
-        [ICommand]
-        private async Task GotoJob()
-        {
-            await Shell.Current.GoToAsync(nameof(JobDetailsPage), true, new Dictionary<string, object>
-            {
-                {"Job", _model}
-            });
-        }
+        public string GetRacket() => _job.Racket;
     }
 }

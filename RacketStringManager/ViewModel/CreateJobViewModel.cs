@@ -34,8 +34,7 @@ namespace RacketStringManager.ViewModel
         [AlsoNotifyChangeFor(nameof(CanSave))]
         private string _tension;
 
-        public bool CanSave =>
-            !(string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Racket) || string.IsNullOrWhiteSpace(StringName)) && ParseTension();
+        public bool CanSave => !(string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Racket) || string.IsNullOrWhiteSpace(StringName)) && ParseTension();
 
         public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
@@ -43,6 +42,19 @@ namespace RacketStringManager.ViewModel
         {
             _jobRepository = jobRepository;
             _uiService = uiService;
+        }
+
+        [ICommand]
+        private void PrefillJob(StringingHistoryViewModel historyVm)
+        {
+            if (string.IsNullOrWhiteSpace(Racket))
+                Racket = historyVm.GetRacket();
+
+            Tension = historyVm.Tension.ToString("F1");
+            StringName = historyVm.StringName;
+            
+            if(historyVm.HasComment)
+                Comment = historyVm.Comment;
         }
 
         [ICommand]
@@ -86,7 +98,7 @@ namespace RacketStringManager.ViewModel
 
             foreach (var job in jobs)
             {
-                History.Add(new StringingHistoryViewModel(job));
+                History.Add(new StringingHistoryViewModel(job) { Command = PrefillJobCommand });
             }
         }
     }
