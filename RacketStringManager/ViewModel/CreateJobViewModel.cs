@@ -52,9 +52,8 @@ namespace RacketStringManager.ViewModel
 
             Tension = historyVm.Tension.ToString("F1");
             StringName = historyVm.StringName;
-            
-            if(historyVm.HasComment)
-                Comment = historyVm.Comment;
+
+            Comment = historyVm.HasComment ? historyVm.Comment : string.Empty;
         }
 
         [ICommand]

@@ -9,11 +9,10 @@
         <Grid ColumnDefinitions="Auto, *, Auto" Margin="5" ColumnSpacing="10"  RowDefinitions="Auto, Auto, Auto, Auto, Auto, *">
             <Label Grid.Row="0" Grid.Column="0" Text="{x:Static res:AppRes.CreateJob_Name}" VerticalOptions="Center"/>
             <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Placeholder="Enter the Name" ClearButtonVisibility="WhileEditing" ReturnType="Next" />
-            <Button Grid.Row="0" Grid.Column="2" Text="Go" Margin="2,15" Command="{Binding ReloadHistoryCommand}"></Button>
+            <ImageButton Grid.Row="0" Grid.Column="2" Source="icons8_search.svg"  Margin="15,15" Grid.RowSpan="2"  Command="{Binding ReloadHistoryCommand}"></ImageButton>
 
             <Label Grid.Row="1" Grid.Column="0" Text="{x:Static res:AppRes.CreateJob_Racket}" VerticalOptions="Center"/>
             <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Racket}" Placeholder="Enter the Racket" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
-            <Button Grid.Row="1" Grid.Column="2" Text="Go" Margin="2,15" Command="{Binding ReloadHistoryCommand}"></Button>
 
             <Label Grid.Row="2" Grid.Column="0" Text="{x:Static res:AppRes.CreateJob_String}" VerticalOptions="Center"/>
             <Entry Grid.Row="2" Grid.Column="1" Text="{Binding StringName}" Placeholder="Enter the String" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
