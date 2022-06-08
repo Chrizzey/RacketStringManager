@@ -6,7 +6,7 @@ public class PlayerRepository : DataRepository, IPlayerRepository
 {
     public PlayerRepository()
     {
-        Database.CreateTable<StringEntity>();
+        Database.CreateTable<PlayerEntity>();
     }
 
     public IEnumerable<PlayerEntity> GetAll() => Database.Table<PlayerEntity>().ToArray();

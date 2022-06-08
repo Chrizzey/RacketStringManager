@@ -15,6 +15,9 @@ The app starts up with a main view, wich contains a button to create a new job. 
 
 When a new job is created, a list of past jobs will be shown. This will contain information about the last time(s) the racket has gotten a new string, including the date the racket was strung as well as the used string type and tension.
 
+## Dev Topics
+Display a list of available Rackets/Strings: https://docs.microsoft.com/en-us/dotnet/maui/user-interface/pop-ups
+
 ## SQLite DB manipulation
 To access the SQLite DB on the phone/emulator, follow these steps:
 

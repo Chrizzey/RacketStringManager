@@ -13,6 +13,9 @@ namespace RacketStringManager.ViewModel
     [QueryProperty(nameof(Job), "Job")]
     public partial class JobDetailsViewModel : ObservableObject
     {
+        private bool _isPaid;
+        private bool _isCompleted;
+
         private readonly IJobRepository _jobRepository;
         private readonly IUiService _uiService;
         private readonly INavigationService _navigationService;
@@ -48,11 +51,33 @@ namespace RacketStringManager.ViewModel
         [ObservableProperty]
         private DateOnly _startDate;
 
-        [ObservableProperty]
-        private bool _isPaid;
+        public bool IsPaid
+        {
+            get => _isPaid;
+            set
+            {
+                if (!SetProperty(ref _isPaid, value)) 
+                    return;
 
-        [ObservableProperty] 
-        private bool _isCompleted;
+                var job = _jobRepository.Find(Job.JobId);
+                job.IsPaid = _isPaid;
+                _jobRepository.Update(job);
+            }
+        }
+
+        public bool IsCompleted
+        {
+            get => _isCompleted;
+            set
+            {
+                if(!SetProperty(ref _isCompleted, value))
+                    return;
+
+                var job = _jobRepository.Find(Job.JobId);
+                job.IsCompleted = _isCompleted;
+                _jobRepository.Update(job);
+            }
+        }
 
         public bool HasComment => !string.IsNullOrWhiteSpace(_comment);
 
