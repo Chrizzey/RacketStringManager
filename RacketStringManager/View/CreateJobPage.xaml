@@ -16,6 +16,7 @@
 
             <Label Grid.Row="2" Grid.Column="0" Text="{x:Static res:AppRes.CreateJob_String}" VerticalOptions="Center"/>
             <Entry Grid.Row="2" Grid.Column="1" Text="{Binding StringName}" Placeholder="Enter the String" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
+            <Button Grid.Row="2" Grid.Column="2" Text=".." Margin="0" Padding="0" Command="{Binding ShowListOfStringsCommand}"></Button>
 
             <Label Grid.Row="3" Grid.Column="0" Text="{x:Static res:AppRes.CreateJob_Tension}" VerticalOptions="Center"/>
             <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Tension}" Placeholder="Enter the Tension" Keyboard="Numeric" ReturnType="Next"/>

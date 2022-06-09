@@ -100,5 +100,22 @@ namespace RacketStringManager.ViewModel
                 History.Add(new StringingHistoryViewModel(job) { Command = PrefillJobCommand });
             }
         }
+
+        [ICommand]
+        private async Task ShowListOfStrings()
+        {
+            try
+            {
+                var strings = _jobService.GetAllStringNames().ToArray();
+
+                var selected = await Shell.Current.DisplayActionSheet("Auswahl", "Abbrechen", "Ok", strings);
+
+                StringName = selected;
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Exception", ex.Message, "OK");
+            }
+        }
     }
 }
