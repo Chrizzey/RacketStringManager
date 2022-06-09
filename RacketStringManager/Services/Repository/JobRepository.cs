@@ -3,29 +3,38 @@ using RacketStringManager.Model.Entities;
 
 namespace RacketStringManager.Services.Repository
 {
-    internal class JobRepository : DataRepository, IJobRepository
+    public interface IJobService
+    {
+        IEnumerable<Job> GetAllJobs();
+        IEnumerable<Job> FindJobsFor(string player);
+        IEnumerable<Job> FindJobsFor(string player, string racket);
+        void Create(Job job);
+        Job Find(Guid id);
+        IEnumerable<string> GetAllPlayerNames();
+        IEnumerable<string> GetAllStringNames();
+        IEnumerable<string> GetAllRacketsForPlayer(string playerName);
+        void Update(Job job);
+        void Delete(Job job);
+    }
+
+    public class JobService : IJobService, IDisposable
     {
         private readonly IPlayerRepository _playerRepository;
         private readonly IRacketRepository _racketRepository;
         private readonly IStringingRepository _stringRepository;
+        private readonly IJobRepository _jobRepository;
 
-        public JobRepository(IPlayerRepository playerRepository, IRacketRepository racketRepository, IStringingRepository stringRepository)
+        public JobService(IJobRepository jobRepository, IPlayerRepository playerRepository, IRacketRepository racketRepository, IStringingRepository stringRepository)
         {
+            _jobRepository = jobRepository;
             _playerRepository = playerRepository;
             _racketRepository = racketRepository;
             _stringRepository = stringRepository;
-
-            CreateTables();
-        }
-
-        private void CreateTables()
-        {
-            Database.CreateTable<JobEntity>();
         }
 
         public IEnumerable<Job> GetAllJobs()
         {
-            return Database.Table<JobEntity>().OrderByDescending(x => x.StartDate).Select(EntityToJob);
+            return _jobRepository.GetAllJobs().Select(EntityToJob);
         }
 
         public IEnumerable<Job> FindJobsFor(string player)
@@ -34,10 +43,9 @@ namespace RacketStringManager.Services.Repository
             if(playerEntity is null)
                 yield break;
 
-            var query = $"select * from {nameof(JobEntity)} where {nameof(JobEntity.PlayerId)} == '{playerEntity.Id}'";
-            foreach (var job in Database.Query<JobEntity>(query))
+            foreach(var jobEntity in _jobRepository.FindJobsFor(playerEntity))
             {
-                yield return EntityToJob(job);
+                yield return EntityToJob(jobEntity);
             }
         }
 
@@ -51,11 +59,53 @@ namespace RacketStringManager.Services.Repository
             if (racketEntity is null)
                 yield break;
 
-            var query = $"select * from {nameof(JobEntity)} where {nameof(JobEntity.PlayerId)} == '{playerEntity.Id}' and {nameof(JobEntity.RacketId)} == '{racketEntity.Id}'";
-            foreach (var job in Database.Query<JobEntity>(query))
+            foreach (var job in _jobRepository.FindJobsFor(playerEntity, racketEntity))
             {
                 yield return EntityToJob(job);
             }
+        }
+
+        public void Create(Job job)
+        {            
+            var jobEntity = JobToJobEntity(job);
+            _jobRepository.Create(jobEntity);
+        }
+
+        public Job Find(Guid id)
+        {
+            var entity = _jobRepository.Find(id);
+            return entity is null ? null : EntityToJob(entity);
+        }
+        
+        public IEnumerable<string> GetAllPlayerNames()
+        {
+            return _playerRepository.GetAll().Select(x => x.Name);
+        }
+
+        public IEnumerable<string> GetAllStringNames()
+        {
+            return _stringRepository.GetAll().Select(x => x.Name);
+        }
+
+        public IEnumerable<string> GetAllRacketsForPlayer(string playerName)
+        {
+            var playerEntity =_playerRepository.Find(playerName);
+            if(playerEntity is null)
+                return Array.Empty<string>();
+
+            return _jobRepository.GetAllRacketsForPlayer(playerEntity);
+        }
+
+        public void Update(Job job)
+        {
+            var entity = JobToJobEntity(job);
+            _jobRepository.Update(entity);
+        }
+
+        public void Delete(Job job)
+        {            
+            var entity = new JobEntity { Id = job.JobId };
+            _jobRepository.Delete(entity);
         }
 
         private Job EntityToJob(JobEntity jobEntity)
@@ -80,13 +130,6 @@ namespace RacketStringManager.Services.Repository
                 StringName = stringName,
                 JobId = jobEntity.Id
             };
-        }
-
-        public int Create(Job job)
-        {
-            var jobEntity = JobToJobEntity(job);
-
-            return Database.Insert(jobEntity);
         }
 
         private JobEntity JobToJobEntity(Job job)
@@ -130,7 +173,7 @@ namespace RacketStringManager.Services.Repository
 
             return jobEntity;
         }
-
+        
         private PlayerEntity FindOrInsertPlayer(Job job)
         {
             var playerEntity = _playerRepository.Find(job.Name);
@@ -142,6 +185,7 @@ namespace RacketStringManager.Services.Repository
 
             return playerEntity;
         }
+        
         private RacketEntity FindOrInsertRacket(Job job)
         {
             var racketEntity = _racketRepository.Find(job.Racket);
@@ -153,6 +197,7 @@ namespace RacketStringManager.Services.Repository
 
             return racketEntity;
         }
+
         private StringEntity FindOrInsertString(Job job)
         {
             var stringEntity = _stringRepository.Find(job.StringName);
@@ -165,52 +210,74 @@ namespace RacketStringManager.Services.Repository
             return stringEntity;
         }
 
-        public Job Find(Guid id)
+        public void Dispose()
+        {            
+            _jobRepository.Dispose();
+            _playerRepository.Dispose();
+            _racketRepository.Dispose();
+            _stringRepository.Dispose();
+        }
+    }
+
+    internal class JobRepository : DataRepository, IJobRepository
+    {
+        public JobRepository()
         {
-            var entity = Database.Find<JobEntity>(id);
-            return entity is null ? null : EntityToJob(entity);
+            CreateTables();
         }
 
-        public IEnumerable<string> GetAllPlayerNames()
+        private void CreateTables()
         {
-            return _playerRepository.GetAll().Select(x => x.Name);
+            Database.CreateTable<JobEntity>();
         }
 
-        public IEnumerable<string> GetAllStringNames()
+        public IEnumerable<JobEntity> GetAllJobs()
         {
-            return _stringRepository.GetAll().Select(x => x.Name);
+            return Database.Table<JobEntity>().OrderByDescending(x => x.StartDate).ToArray();
         }
 
-        public IEnumerable<string> GetAllRacketsForPlayer(string playerName)
+        public IEnumerable<JobEntity> FindJobsFor(PlayerEntity playerEntity)
         {
-            var playerEntity =_playerRepository.Find(playerName);
-            
-            // TODO: can this be refactored?
+            var query = $"select * from {nameof(JobEntity)} where {nameof(JobEntity.PlayerId)} == '{playerEntity.Id}'";
+            return Database.Query<JobEntity>(query).ToArray();
+        }
+
+        public IEnumerable<JobEntity> FindJobsFor(PlayerEntity playerEntity, RacketEntity racketEntity)
+        {           
+            var query = $"select * from {nameof(JobEntity)} where {nameof(JobEntity.PlayerId)} == '{playerEntity.Id}' and {nameof(JobEntity.RacketId)} == '{racketEntity.Id}'";
+            return Database.Query<JobEntity>(query).ToArray();            
+        }
+
+        public int Create(JobEntity jobEntity)
+        {
+            return Database.Insert(jobEntity);
+        }
+
+        public JobEntity Find(Guid id)
+        {
+            return Database.Find<JobEntity>(id);            
+        }
+
+        public IEnumerable<string> GetAllRacketsForPlayer(PlayerEntity playerEntity)
+        {            
             var query = $"select * from {nameof(RacketEntity)} where id in (" +
                         $"select racketId from {nameof(JobEntity)} where {nameof(JobEntity.PlayerId)} = '{playerEntity.Id}')";
 
             return Database.Query<RacketEntity>(query).Select(x => x.Name);
         }
 
-        public int Update(Job job)
+        public int Update(JobEntity entity)
         {
-            var entity = JobToJobEntity(job);
-
             return Database.Update(entity);
         }
 
-        public int Delete(Job job)
+        public int Delete(JobEntity entity)
         {
-            var entity = new JobEntity { Id = job.JobId };
             return Database.Delete(entity);
         }
 
         public void Clear()
         {
-            _playerRepository.Clear();
-            _racketRepository.Clear();
-            _stringRepository.Clear();
-
             Database.DropTable<JobEntity>();
             
             CreateTables();
