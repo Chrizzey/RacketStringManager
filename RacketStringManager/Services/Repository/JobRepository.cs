@@ -1,5 +1,4 @@
-﻿using RacketStringManager.Model;
-using RacketStringManager.Model.Entities;
+﻿using RacketStringManager.Model.Entities;
 
 namespace RacketStringManager.Services.Repository
 {   
@@ -65,11 +64,6 @@ namespace RacketStringManager.Services.Repository
             Database.DropTable<JobEntity>();
             
             CreateTables();
-        }
-
-        public void Dispose()
-        {
-            Database.Dispose();
         }
     }
 }

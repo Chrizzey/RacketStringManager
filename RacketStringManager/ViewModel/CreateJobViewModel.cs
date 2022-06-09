@@ -10,7 +10,7 @@ namespace RacketStringManager.ViewModel
 {
     public partial class CreateJobViewModel : ObservableObject
     {
-        private readonly IJobRepository _jobRepository;
+        private readonly IJobService _jobService;
         private readonly IUiService _uiService;
 
         private double _tensionInKg;
@@ -38,9 +38,9 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
-        public CreateJobViewModel(IJobRepository jobRepository, IUiService uiService)
+        public CreateJobViewModel(IJobService jobService, IUiService uiService)
         {
-            _jobRepository = jobRepository;
+            _jobService = jobService;
             _uiService = uiService;
         }
 
@@ -71,7 +71,7 @@ namespace RacketStringManager.ViewModel
                 IsCompleted = false
             };
 
-            _jobRepository.Create(job);
+            _jobService.Create(job);
 
             _uiService.GoBackAsync();
         }
@@ -92,8 +92,8 @@ namespace RacketStringManager.ViewModel
                 History.Clear();
 
             var jobs = string.IsNullOrWhiteSpace(Racket)
-                ? _jobRepository.FindJobsFor(Name)
-                : _jobRepository.FindJobsFor(Name, Racket);
+                ? _jobService.FindJobsFor(Name)
+                : _jobService.FindJobsFor(Name, Racket);
 
             foreach (var job in jobs)
             {

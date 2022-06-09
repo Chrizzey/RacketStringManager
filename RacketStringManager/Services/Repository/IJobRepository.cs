@@ -1,5 +1,4 @@
-﻿using RacketStringManager.Model;
-using RacketStringManager.Model.Entities;
+﻿using RacketStringManager.Model.Entities;
 
 namespace RacketStringManager.Services.Repository;
 
@@ -12,4 +11,5 @@ public interface IJobRepository : IDisposable
     int Update(JobEntity job);
     JobEntity Find(Guid id);
     int Delete(JobEntity job);
+    IEnumerable<string> GetAllRacketsForPlayer(PlayerEntity playerEntity);
 }

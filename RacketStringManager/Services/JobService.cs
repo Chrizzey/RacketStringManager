@@ -1,7 +1,8 @@
 ﻿using RacketStringManager.Model;
 using RacketStringManager.Model.Entities;
+using RacketStringManager.Services.Repository;
 
-namespace RacketStringManager.Services.Repository
+namespace RacketStringManager.Services
 {
     public class JobService : IJobService, IDisposable
     {
@@ -26,10 +27,10 @@ namespace RacketStringManager.Services.Repository
         public IEnumerable<Job> FindJobsFor(string player)
         {
             var playerEntity = _playerRepository.Find(player);
-            if(playerEntity is null)
+            if (playerEntity is null)
                 yield break;
 
-            foreach(var jobEntity in _jobRepository.FindJobsFor(playerEntity))
+            foreach (var jobEntity in _jobRepository.FindJobsFor(playerEntity))
             {
                 yield return EntityToJob(jobEntity);
             }
@@ -52,7 +53,7 @@ namespace RacketStringManager.Services.Repository
         }
 
         public void Create(Job job)
-        {            
+        {
             var jobEntity = JobToJobEntity(job);
             _jobRepository.Create(jobEntity);
         }
@@ -62,7 +63,7 @@ namespace RacketStringManager.Services.Repository
             var entity = _jobRepository.Find(id);
             return entity is null ? null : EntityToJob(entity);
         }
-        
+
         public IEnumerable<string> GetAllPlayerNames()
         {
             return _playerRepository.GetAll().Select(x => x.Name);
@@ -75,8 +76,8 @@ namespace RacketStringManager.Services.Repository
 
         public IEnumerable<string> GetAllRacketsForPlayer(string playerName)
         {
-            var playerEntity =_playerRepository.Find(playerName);
-            if(playerEntity is null)
+            var playerEntity = _playerRepository.Find(playerName);
+            if (playerEntity is null)
                 return Array.Empty<string>();
 
             return _jobRepository.GetAllRacketsForPlayer(playerEntity);
@@ -89,7 +90,7 @@ namespace RacketStringManager.Services.Repository
         }
 
         public void Delete(Job job)
-        {            
+        {
             var entity = new JobEntity { Id = job.JobId };
             _jobRepository.Delete(entity);
         }
@@ -159,25 +160,25 @@ namespace RacketStringManager.Services.Repository
 
             return jobEntity;
         }
-        
+
         private PlayerEntity FindOrInsertPlayer(Job job)
         {
             var playerEntity = _playerRepository.Find(job.Name);
             if (playerEntity is null)
             {
-                playerEntity = new PlayerEntity {Name = job.Name};
+                playerEntity = new PlayerEntity { Name = job.Name };
                 _playerRepository.Insert(playerEntity);
             }
 
             return playerEntity;
         }
-        
+
         private RacketEntity FindOrInsertRacket(Job job)
         {
             var racketEntity = _racketRepository.Find(job.Racket);
             if (racketEntity is null)
             {
-                racketEntity = new RacketEntity {Name = job.Racket};
+                racketEntity = new RacketEntity { Name = job.Racket };
                 _racketRepository.Insert(racketEntity);
             }
 
@@ -189,7 +190,7 @@ namespace RacketStringManager.Services.Repository
             var stringEntity = _stringRepository.Find(job.StringName);
             if (stringEntity is null)
             {
-                stringEntity = new StringEntity {Name = job.StringName };
+                stringEntity = new StringEntity { Name = job.StringName };
                 _stringRepository.Insert(stringEntity);
             }
 
@@ -197,7 +198,7 @@ namespace RacketStringManager.Services.Repository
         }
 
         public void Dispose()
-        {            
+        {
             _jobRepository.Dispose();
             _playerRepository.Dispose();
             _racketRepository.Dispose();
