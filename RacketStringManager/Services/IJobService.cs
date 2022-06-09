@@ -1,7 +1,6 @@
 using RacketStringManager.Model;
-using RacketStringManager.Model.Entities;
 
-namespace RacketStringManager.Services.Repository
+namespace RacketStringManager.Services
 {
     public interface IJobService
     {

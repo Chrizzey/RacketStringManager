@@ -16,7 +16,7 @@ namespace RacketStringManager.ViewModel
         private bool _isPaid;
         private bool _isCompleted;
 
-        private readonly IJobRepository _jobRepository;
+        private readonly IJobService _jobRepository;
         private readonly IUiService _uiService;
         private readonly INavigationService _navigationService;
 
@@ -83,7 +83,7 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
 
-        public JobDetailsViewModel(IJobRepository jobRepository, IUiService uiService, INavigationService navigationService)
+        public JobDetailsViewModel(IJobService jobRepository, IUiService uiService, INavigationService navigationService)
         {
             _jobRepository = jobRepository;
             _uiService = uiService;

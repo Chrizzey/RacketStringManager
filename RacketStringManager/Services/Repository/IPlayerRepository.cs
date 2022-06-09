@@ -2,7 +2,7 @@
 
 namespace RacketStringManager.Services.Repository;
 
-public interface IPlayerRepository
+public interface IPlayerRepository : IDisposable
 {
     IEnumerable<PlayerEntity> GetAll();
     PlayerEntity Find(string name);

@@ -45,7 +45,7 @@ public static class ServiceBuilderExtensions
         services.AddSingleton<IRacketRepository, RacketRepository>();
         services.AddSingleton<IStringingRepository, StringingRepository>();
 
-        services.AddSingleton<IAsyncJobRepository, AsyncJobRepository>();
+        services.AddSingleton<IJobService, JobService>();
 
         return services;
     }

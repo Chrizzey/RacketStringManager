@@ -2,7 +2,7 @@
 
 namespace RacketStringManager.Services.Repository;
 
-public interface IStringingRepository
+public interface IStringingRepository : IDisposable
 {
     IEnumerable<StringEntity> GetAll();
     StringEntity Find(string name);

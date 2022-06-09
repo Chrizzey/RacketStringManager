@@ -13,7 +13,7 @@ namespace RacketStringManager.ViewModel
     public partial class EditJobViewModel : ObservableObject
     {
         private Job _job;
-        private readonly IJobRepository _jobRepository;
+        private readonly IJobService _jobService;
         private readonly IUiService _uiService;
 
         private double _tensionInKg;
@@ -54,7 +54,7 @@ namespace RacketStringManager.ViewModel
             get => _job;
             set
             {
-                var job = _jobRepository.Find(value.JobId);
+                var job = _jobService.Find(value.JobId);
                 SetProperty(ref _job, job);
                 UpdateProperties();
             }
@@ -76,14 +76,14 @@ namespace RacketStringManager.ViewModel
                 IsCompleted = IsCompleted
             };
 
-            _jobRepository.Update(job);
+            _jobService.Update(job);
 
             await _uiService.GoBackAsync();
         }
 
-        public EditJobViewModel(IJobRepository repository, IUiService uiService)
+        public EditJobViewModel(IJobService jobService, IUiService uiService)
         {
-            _jobRepository = repository;
+            _jobService = jobService;
             _uiService = uiService;
         }
 
@@ -103,8 +103,8 @@ namespace RacketStringManager.ViewModel
                 History.Clear();
 
             var jobs = string.IsNullOrWhiteSpace(Racket)
-                ? _jobRepository.FindJobsFor(Name)
-                : _jobRepository.FindJobsFor(Name, Racket);
+                ? _jobService.FindJobsFor(Name)
+                : _jobService.FindJobsFor(Name, Racket);
 
             foreach (var job in jobs)
             {
@@ -121,7 +121,7 @@ namespace RacketStringManager.ViewModel
             IsPaid = Job.IsPaid;
             IsCompleted = Job.IsCompleted;
 
-            var history = _jobRepository.FindJobsFor(Name, Racket).ToArray();
+            var history = _jobService.FindJobsFor(Name, Racket).ToArray();
 
             if (History.Count != 0)
                 History.Clear();
