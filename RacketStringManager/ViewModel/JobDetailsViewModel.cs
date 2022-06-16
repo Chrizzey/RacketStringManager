@@ -129,7 +129,7 @@ namespace RacketStringManager.ViewModel
 
             try
             {
-                foreach (var entry in history)
+                foreach (var entry in history.OrderByDescending(x => x.StartDate))
                 {
                     if (entry.JobId == Job.JobId)
                         continue;

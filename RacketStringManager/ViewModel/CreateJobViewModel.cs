@@ -95,7 +95,7 @@ namespace RacketStringManager.ViewModel
                 ? _jobService.FindJobsFor(Name)
                 : _jobService.FindJobsFor(Name, Racket);
 
-            foreach (var job in jobs)
+            foreach (var job in jobs.OrderByDescending(x => x.StartDate))
             {
                 History.Add(new StringingHistoryViewModel(job) { Command = PrefillJobCommand });
             }
