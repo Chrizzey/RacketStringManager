@@ -17,6 +17,8 @@ public class RacketRepository : DataRepository, IRacketRepository
 
     public void Insert(RacketEntity entity) => Database.Insert(entity);
 
+    public void Delete(RacketEntity entity) => Database.Delete(entity);
+
     public void Clear()
     {
         Database.DropTable<PlayerEntity>();

@@ -9,4 +9,5 @@ public interface IRacketRepository : IDisposable
     RacketEntity Get(Guid id);
     void Insert(RacketEntity entity);
     void Clear();
+    void Delete(RacketEntity entity);
 }

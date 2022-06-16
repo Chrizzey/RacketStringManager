@@ -9,4 +9,5 @@ public interface IStringingRepository : IDisposable
     StringEntity Get(Guid id);
     void Insert(StringEntity entity);
     void Clear();
+    void Delete(StringEntity entity);
 }

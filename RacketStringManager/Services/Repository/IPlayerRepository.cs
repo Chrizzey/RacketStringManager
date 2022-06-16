@@ -9,4 +9,5 @@ public interface IPlayerRepository : IDisposable
     PlayerEntity Get(Guid id);
     void Insert(PlayerEntity entity);
     void Clear();
+    void Delete(PlayerEntity entity);
 }

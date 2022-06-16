@@ -9,14 +9,21 @@ namespace RacketStringManager.Services
         private readonly IPlayerRepository _playerRepository;
         private readonly IRacketRepository _racketRepository;
         private readonly IStringingRepository _stringRepository;
+        private readonly IRepositoryCleaner _repositoryCleaner;
         private readonly IJobRepository _jobRepository;
 
-        public JobService(IJobRepository jobRepository, IPlayerRepository playerRepository, IRacketRepository racketRepository, IStringingRepository stringRepository)
+        public JobService(
+            IJobRepository jobRepository, 
+            IPlayerRepository playerRepository, 
+            IRacketRepository racketRepository, 
+            IStringingRepository stringRepository,
+            IRepositoryCleaner repositoryCleaner)
         {
             _jobRepository = jobRepository;
             _playerRepository = playerRepository;
             _racketRepository = racketRepository;
             _stringRepository = stringRepository;
+            _repositoryCleaner = repositoryCleaner;
         }
 
         public IEnumerable<Job> GetAllJobs()
@@ -93,6 +100,8 @@ namespace RacketStringManager.Services
         {
             var entity = new JobEntity { Id = job.JobId };
             _jobRepository.Delete(entity);
+
+            _repositoryCleaner.CleanRepository();
         }
 
         private Job EntityToJob(JobEntity jobEntity)

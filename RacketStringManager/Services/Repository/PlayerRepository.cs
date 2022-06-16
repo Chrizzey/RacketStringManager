@@ -17,6 +17,8 @@ public class PlayerRepository : DataRepository, IPlayerRepository
 
     public void Insert(PlayerEntity entity) => Database.Insert(entity);
 
+    public void Delete(PlayerEntity entity) => Database.Delete(entity);
+
     public void Clear()
     {
         Database.DropTable<PlayerEntity>();
