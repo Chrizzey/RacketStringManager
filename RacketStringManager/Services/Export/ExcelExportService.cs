@@ -55,16 +55,15 @@ namespace RacketStringManager.Services.Export
                     worksheet.Cells[row, 7].Value = job.IsCompleted;
                     worksheet.Cells[row, 8].Value = job.IsPaid;
                 }
-                
-                await package.SaveAsAsync("/storage/emulated/0/download/Testdaten.xlsx");
 
+                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Export.xlsx");
+
+                await package.SaveAsAsync(path);
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Exception", ex.Message, "OK");
             }
-
-
         }
     }
 }
