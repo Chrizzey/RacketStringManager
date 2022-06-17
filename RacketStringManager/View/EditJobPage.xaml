@@ -9,10 +9,10 @@
     <StackLayout>
         <com:JobEditView BindingContext="{Binding EditViewModel}"></com:JobEditView>
         <Grid ColumnDefinitions="*,Auto,*,Auto" ColumnSpacing="10">
-            <Label Grid.Column="0" Text="Paid" VerticalOptions="Center" HorizontalOptions="End"></Label>
+            <Label Grid.Column="0" Text="{x:Static res:AppRes.JobDetails_Paid}" VerticalOptions="Center" HorizontalOptions="End"></Label>
             <CheckBox Grid.Column="1" IsChecked="{Binding IsPaid}" Margin="2,2,50,2"></CheckBox>
 
-            <Label Grid.Column="2" Text="Completed" VerticalOptions="Center" HorizontalOptions="End"></Label>
+            <Label Grid.Column="2" Text="{x:Static res:AppRes.JobDetails_Completed}" VerticalOptions="Center" HorizontalOptions="End"></Label>
             <CheckBox Grid.Column="3" IsChecked="{Binding IsCompleted}" Margin="2,2,50,2"></CheckBox>
         </Grid>
         <Button Margin="5" Command="{Binding SaveCommand}" Text="{x:Static res:AppRes.CreateJob_Save}" IsEnabled="{Binding CanSave}"></Button>

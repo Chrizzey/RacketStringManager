@@ -142,6 +142,9 @@
     <value>Comment</value>
     <comment>Additional comments for the job</comment>
   </data>
+  <data name="JobDetails_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
   <data name="JobDetails_DeleteConfirm_Accept" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -163,6 +166,9 @@
   <data name="JobDetails_Name" xml:space="preserve">
     <value>Name</value>
     <comment>The name of the client</comment>
+  </data>
+  <data name="JobDetails_Paid" xml:space="preserve">
+    <value>Paid</value>
   </data>
   <data name="JobDetails_Racket" xml:space="preserve">
     <value>Racket</value>
