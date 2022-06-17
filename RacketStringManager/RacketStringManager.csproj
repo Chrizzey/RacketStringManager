@@ -80,6 +80,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="View\Components\JobEditView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\Components\StringingHistory.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
