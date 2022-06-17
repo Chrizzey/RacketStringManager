@@ -1,11 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
+﻿using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
 using RacketStringManager.Services;
-using RacketStringManager.Services.Repository;
+using RacketStringManager.ViewModel.Components;
 
 namespace RacketStringManager.ViewModel
 {
@@ -15,40 +13,15 @@ namespace RacketStringManager.ViewModel
         private Job _job;
         private readonly IJobService _jobService;
         private readonly IUiService _uiService;
-
-        private double _tensionInKg;
-
-        [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(CanSave))]
-        private string _name;
-
-        [ObservableProperty]
-        private string _comment;
-
-        [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(CanSave))]
-        private string _racket;
-
-        [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(CanSave))]
-        private string _stringName;
-
-        [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(CanSave))]
-        private string _tension;
+        
+        public JobEditViewModel EditViewModel { get; }
 
         [ObservableProperty] 
         private bool _isPaid;
         
         [ObservableProperty] 
         private bool _isCompleted;
-
-        public bool CanSave =>
-            !(string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Racket) || string.IsNullOrWhiteSpace(StringName)) && ParseTension();
-
-        public ObservableCollection<StringingHistoryViewModel> History { get; } = new();
-
-
+        
         public Job Job
         {
             get => _job;
@@ -63,14 +36,16 @@ namespace RacketStringManager.ViewModel
         [ICommand]
         private async Task Save()
         {
+            var edited = EditViewModel.GetJob();
+
             var job = new Job
             {
                 JobId = _job.JobId,
-                Name = Name,
-                StringName = StringName,
-                Racket = Racket,
-                Tension = _tensionInKg,
-                Comment = Comment,
+                Name = edited.Name,
+                StringName = edited.StringName,
+                Racket = edited.Racket,
+                Tension = edited.Tension,
+                Comment = edited.Comment,
                 StartDate = Job.StartDate,
                 IsPaid = _isPaid,
                 IsCompleted = IsCompleted
@@ -85,46 +60,23 @@ namespace RacketStringManager.ViewModel
         {
             _jobService = jobService;
             _uiService = uiService;
+            EditViewModel = new JobEditViewModel(jobService, new Command(() => { }));
         }
-
-        private bool ParseTension()
-        {
-            var tension = Tension?.Replace(",", ".");
-            return double.TryParse(tension, NumberStyles.Any, CultureInfo.InvariantCulture, out _tensionInKg);
-        }
-
-        [ICommand]
-        private void ReloadHistory()
-        {
-            if (string.IsNullOrWhiteSpace(Name))
-                return;
-
-            if (History.Count != 0)
-                History.Clear();
-
-            var jobs = string.IsNullOrWhiteSpace(Racket)
-                ? _jobService.FindJobsFor(Name)
-                : _jobService.FindJobsFor(Name, Racket);
-
-            foreach (var job in jobs)
-            {
-                History.Add(new StringingHistoryViewModel(job));
-            }
-        }
+        
         private void UpdateProperties()
         {
-            Name = Job.Name;
-            Racket = Job.Racket;
-            StringName = Job.StringName;
-            Comment = Job.Comment;
-            Tension = Job.Tension.ToString("F1");
+            EditViewModel.Name = Job.Name;
+            EditViewModel.Racket = Job.Racket;
+            EditViewModel.StringName = Job.StringName;
+            EditViewModel.Comment = Job.Comment;
+            EditViewModel.Tension = Job.Tension.ToString("F1");
             IsPaid = Job.IsPaid;
             IsCompleted = Job.IsCompleted;
 
-            var history = _jobService.FindJobsFor(Name, Racket).ToArray();
+            var history = _jobService.FindJobsFor(EditViewModel.Name, EditViewModel.Racket).ToArray();
 
-            if (History.Count != 0)
-                History.Clear();
+            if (EditViewModel.History.Count != 0)
+                EditViewModel.History.Clear();
 
             try
             {
@@ -133,15 +85,13 @@ namespace RacketStringManager.ViewModel
                     if (entry.JobId == Job.JobId)
                         continue;
 
-                    History.Add(new StringingHistoryViewModel(entry));
+                    EditViewModel.History.Add(new StringingHistoryViewModel(entry));
                 }
             }
             catch (Exception ex)
             {
-
                 Debug.WriteLine(ex);
-
-                // Todo: Abstract this UI call
+                
                 _uiService.DisplayAlertAsync("Error!", "Unable to load jobs from cache", "OK");
             }
         }

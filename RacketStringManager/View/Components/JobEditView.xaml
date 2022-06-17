@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:res="clr-namespace:RacketStringManager.Resources"
+             x:Class="RacketStringManager.View.Components.JobEditView">
+    <Grid ColumnDefinitions="Auto, *, Auto" Margin="5" ColumnSpacing="10"  RowDefinitions="Auto, Auto, Auto, Auto, Auto, *">
+        <Label Grid.Row="0" Grid.Column="0" Text="{x:Static res:AppRes.CreateJob_Name}" VerticalOptions="Center"/>
+        <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Placeholder="Enter the Name" ClearButtonVisibility="WhileEditing" ReturnType="Next" />
+        <ImageButton Grid.Row="0" Grid.Column="2" Source="icons8_search.svg"  Margin="15,15" Grid.RowSpan="2"  Command="{Binding ReloadHistoryCommand}"></ImageButton>
+
+        <Label Grid.Row="1" Grid.Column="0" Text="{x:Static res:AppRes.CreateJob_Racket}" VerticalOptions="Center"/>
+        <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Racket}" Placeholder="Enter the Racket" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
+
+        <Label Grid.Row="2" Grid.Column="0" Text="{x:Static res:AppRes.CreateJob_String}" VerticalOptions="Center"/>
+        <Entry Grid.Row="2" Grid.Column="1" Text="{Binding StringName}" Placeholder="Enter the String" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
+        <Button Grid.Row="2" Grid.Column="2" Text=".." Margin="0" Padding="0" Command="{Binding ShowListOfStringsCommand}"></Button>
+
+        <Label Grid.Row="3" Grid.Column="0" Text="{x:Static res:AppRes.CreateJob_Tension}" VerticalOptions="Center"/>
+        <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Tension}" Placeholder="Enter the Tension" Keyboard="Numeric" ReturnType="Next"/>
+
+        <Label Grid.Row="4" Grid.Column="0" Text="{x:Static res:AppRes.CreateJob_Comment}" VerticalOptions="Center"/>
+        <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Comment}" Placeholder="Enter a Comment" ClearButtonVisibility="WhileEditing" ReturnType="Next"/>
+    </Grid>
+</ContentView>
