@@ -1,4 +1,5 @@
-﻿using RacketStringManager.Services;
+﻿using OfficeOpenXml;
+using RacketStringManager.Services;
 using RacketStringManager.Services.Export;
 using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
@@ -24,7 +25,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<IJobViewModelFactory, JobViewModelFactory>()
             .AddSingleton<IUiService, UiService>()
             .AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<IShare, ShareService>()
             .AddTransient<MainPage>()
             .AddSingleton<MainViewModel>();
        
@@ -34,7 +34,11 @@ public static class MauiProgram
             .AddPageWithViewModel<EditJobPage, EditJobViewModel>()
             ;
 
-        builder.Services.AddSingleton<ExcelExportService>();
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        builder.Services.AddTransient<ExcelExportService>();
+        builder.Services.AddTransient<ExcelImportService>();
+        builder.Services.AddSingleton(x => Share.Default);
+        builder.Services.AddSingleton(x => FilePicker.Default);
 
         return builder.Build();
     }
