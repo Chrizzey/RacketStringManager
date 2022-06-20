@@ -17,6 +17,8 @@ public class StringingRepository : DataRepository, IStringingRepository
 
     public void Insert(StringEntity entity) => Database.Insert(entity);
 
+    public void Delete(StringEntity entity) => Database.Delete(entity);
+
     public void Clear()
     {
         Database.DropTable<PlayerEntity>();

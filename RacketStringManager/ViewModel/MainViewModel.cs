@@ -12,7 +12,7 @@ namespace RacketStringManager.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
-        private readonly IJobRepository _jobService;
+        private readonly IJobService _jobService;
         private readonly IJobViewModelFactory _jobViewModelFactory;
         private readonly IUiService _uiService;
         private readonly INavigationService _navigationService;
@@ -29,9 +29,7 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<JobListViewModel> Jobs { get; } = new();
 
-        public MainViewModel(IJobRepository jobService, 
-            IJobViewModelFactory jobViewModelFactory, IUiService uiService, INavigationService navigationService,
-            ExcelExportService exportService, ExcelImportService importService)
+        public MainViewModel(IJobService jobService, IJobViewModelFactory jobViewModelFactory, IUiService uiService, INavigationService navigationService, ExcelExportService exportService, ExcelImportService importService)
         {
             _jobService = jobService;
             _jobViewModelFactory = jobViewModelFactory;

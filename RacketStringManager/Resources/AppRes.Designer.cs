@@ -133,6 +133,15 @@ namespace RacketStringManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Completed.
+        /// </summary>
+        internal static string JobDetails_Completed {
+            get {
+                return ResourceManager.GetString("JobDetails_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         internal static string JobDetails_DeleteConfirm_Accept {
@@ -192,6 +201,15 @@ namespace RacketStringManager.Resources {
         internal static string JobDetails_Name {
             get {
                 return ResourceManager.GetString("JobDetails_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paid.
+        /// </summary>
+        internal static string JobDetails_Paid {
+            get {
+                return ResourceManager.GetString("JobDetails_Paid", resourceCulture);
             }
         }
         
