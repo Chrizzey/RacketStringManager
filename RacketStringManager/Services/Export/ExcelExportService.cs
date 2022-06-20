@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using RacketStringManager.Services.Repository;
 
 
@@ -25,7 +19,6 @@ namespace RacketStringManager.Services.Export
         {
             try
             {
-                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using var package = new ExcelPackage();
 
                 var worksheet = package.Workbook.Worksheets.Add("App Export");
@@ -37,9 +30,9 @@ namespace RacketStringManager.Services.Export
                 worksheet.Cells[1, 3].Value = "Schläger";
                 worksheet.Cells[1, 4].Value = "Saite";
                 worksheet.Cells[1, 5].Value = "Bespannung";
-                worksheet.Cells[1, 6].Value = "Kommentar";
+                worksheet.Cells[1, 6].Value = "Bezahlt";
                 worksheet.Cells[1, 7].Value = "Fertig";
-                worksheet.Cells[1, 8].Value = "Bezahlt";
+                worksheet.Cells[1, 8].Value = "Kommentar";
 
                 for (var i = 0; i < jobs.Length; i++)
                 {
@@ -51,9 +44,9 @@ namespace RacketStringManager.Services.Export
                     worksheet.Cells[row, 3].Value = job.Racket;
                     worksheet.Cells[row, 4].Value = job.StringName;
                     worksheet.Cells[row, 5].Value = job.Tension.ToString("F1");
+                    worksheet.Cells[row, 6].Value = job.IsPaid ? 1 : 0;
+                    worksheet.Cells[row, 7].Value = job.IsCompleted ? 1 : 0;
                     worksheet.Cells[row, 6].Value = job.Comment;
-                    worksheet.Cells[row, 7].Value = job.IsCompleted;
-                    worksheet.Cells[row, 8].Value = job.IsPaid;
                 }
 
                 var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Export.xlsx");
