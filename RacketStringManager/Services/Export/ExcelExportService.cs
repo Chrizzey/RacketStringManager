@@ -6,12 +6,12 @@ namespace RacketStringManager.Services.Export
 {
     public class ExcelExportService
     {
-        private readonly IJobRepository _jobRepository;
+        private readonly IJobService _jobService;
         private readonly IShare _share;
 
-        public ExcelExportService(IJobRepository jobRepository, IShare share)
+        public ExcelExportService(IJobService jobService, IShare share)
         {
-            _jobRepository = jobRepository;
+            _jobService = jobService;
             _share = share;
         }
 
@@ -23,7 +23,7 @@ namespace RacketStringManager.Services.Export
 
                 var worksheet = package.Workbook.Worksheets.Add("App Export");
 
-                var jobs = _jobRepository.GetAllJobs().ToArray();
+                var jobs = _jobService.GetAllJobs().ToArray();
 
                 worksheet.Cells[1, 1].Value = ExportNames.Date;
                 worksheet.Cells[1, 2].Value = ExportNames.Name;

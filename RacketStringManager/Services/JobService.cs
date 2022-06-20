@@ -104,6 +104,14 @@ namespace RacketStringManager.Services
             _repositoryCleaner.CleanRepository();
         }
 
+        public void Clear()
+        {
+            _jobRepository.Clear();
+            _playerRepository.Clear();
+            _stringRepository.Clear();
+            _racketRepository.Clear();
+        }
+
         private Job EntityToJob(JobEntity jobEntity)
         {
             var playerName = _playerRepository.Get(jobEntity.PlayerId)?.Name ?? "name not found";

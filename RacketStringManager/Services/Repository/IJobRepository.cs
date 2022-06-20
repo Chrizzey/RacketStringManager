@@ -12,4 +12,5 @@ public interface IJobRepository : IDisposable
     JobEntity Find(Guid id);
     int Delete(JobEntity job);
     IEnumerable<string> GetAllRacketsForPlayer(PlayerEntity playerEntity);
+    void Clear();
 }

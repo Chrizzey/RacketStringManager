@@ -1,19 +1,22 @@
 ﻿using OfficeOpenXml;
 using RacketStringManager.Model;
+using RacketStringManager.ViewModel.Components;
 
 namespace RacketStringManager.Services.Export;
 
 public class ExcelImportService : IDisposable
 {
     private readonly IFilePicker _picker;
+    private readonly IJobService _jobService;
     private FileResult _pickResult;
     private ExcelPackage _excelPackage;
     private ExcelWorksheet _worksheet;
     private Dictionary<string, int> _importMapping;
 
-    public ExcelImportService(IFilePicker picker)
+    public ExcelImportService(IFilePicker picker, IJobService jobService)
     {
         _picker = picker;
+        _jobService = jobService;
     }
 
     public async Task Import()
@@ -80,6 +83,11 @@ public class ExcelImportService : IDisposable
         }
     }
 
+    private Task ClearDatabase()
+    {
+        return Task.Run(() => _jobService.Clear());
+    }
+
     private async Task ImportAllJobs()
     {
         await Task.Run(() =>
@@ -91,6 +99,9 @@ public class ExcelImportService : IDisposable
                 {
                     row++;
 
+                    if (!JobEditViewModel.ParseTension(GetValue(row, ExportNames.Tension)?.ToString(), out var tension))
+                        tension = 0d;
+
                     var job = new Job
                     {
                         Name = GetValue(row, ExportNames.Name)?.ToString() ?? "Kein Name",
@@ -99,12 +110,14 @@ public class ExcelImportService : IDisposable
                         StringName = GetValue(row, ExportNames.Stringing)?.ToString() ?? "Keine Saite",
                         Comment = GetValue(row, ExportNames.Comment)?.ToString() ?? string.Empty,
 
-                        IsPaid = GetValue(row, ExportNames.Paid).Equals(1),
-                        IsCompleted = GetValue(row, ExportNames.Completed).Equals(1),
+                        IsPaid = GetBooleanValue(row, ExportNames.Paid),
+                        IsCompleted = GetBooleanValue(row, ExportNames.Completed),
 
-                        Tension = 0d,
+                        Tension = tension,
                         StartDate = new DateOnly()
                     };
+                    
+                    _jobService.Create(job);
                 }
             }
             catch (Exception ex)
@@ -118,6 +131,12 @@ public class ExcelImportService : IDisposable
     {
         var column = _importMapping[name.ToLower()];
         return _worksheet.Cells[row, column].Value;
+    }
+    
+
+    private bool GetBooleanValue(int row, string name)
+    {
+       return GetValue(row, name).Equals(1);
     }
 
     public void Dispose()
