@@ -50,6 +50,7 @@
                 Text="{x:Static res:AppRes.Overview_PendingJobs}"></Button>
 
         <Button Grid.Row="3" Command="{Binding ExportDatabaseCommand}" Text="Export to Excel"></Button>
+        <Button Grid.Row="3" Grid.Column="1" Command="{Binding ImportDatabaseCommand}" Text="Import Excel"></Button>
 
         <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
                            HorizontalOptions="FillAndExpand"

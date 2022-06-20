@@ -17,6 +17,7 @@ namespace RacketStringManager.ViewModel
         private readonly IUiService _uiService;
         private readonly INavigationService _navigationService;
         private readonly ExcelExportService _exportService;
+        private readonly ExcelImportService _importService;
 
         [ObservableProperty]
         private bool _showsOpenJobsOnly;
@@ -28,13 +29,16 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<JobListViewModel> Jobs { get; } = new();
 
-        public MainViewModel(IJobRepository jobService, IJobViewModelFactory jobViewModelFactory, IUiService uiService, INavigationService navigationService, ExcelExportService exportService)
+        public MainViewModel(IJobRepository jobService, 
+            IJobViewModelFactory jobViewModelFactory, IUiService uiService, INavigationService navigationService,
+            ExcelExportService exportService, ExcelImportService importService)
         {
             _jobService = jobService;
             _jobViewModelFactory = jobViewModelFactory;
             _uiService = uiService;
             _navigationService = navigationService;
             _exportService = exportService;
+            _importService = importService;
             _showsOpenJobsOnly = true;
         }
 
@@ -97,6 +101,12 @@ namespace RacketStringManager.ViewModel
         private async Task ExportDatabase()
         {
             await _exportService.Export();
+        }
+
+        [ICommand]
+        private async Task ImportDatabase()
+        {
+            await _importService.Import();
         }
     }
 }

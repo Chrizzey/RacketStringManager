@@ -25,14 +25,14 @@ namespace RacketStringManager.Services.Export
 
                 var jobs = _jobRepository.GetAllJobs().ToArray();
 
-                worksheet.Cells[1, 1].Value = "Datum";
-                worksheet.Cells[1, 2].Value = "Name";
-                worksheet.Cells[1, 3].Value = "Schläger";
-                worksheet.Cells[1, 4].Value = "Saite";
-                worksheet.Cells[1, 5].Value = "Bespannung";
-                worksheet.Cells[1, 6].Value = "Bezahlt";
-                worksheet.Cells[1, 7].Value = "Fertig";
-                worksheet.Cells[1, 8].Value = "Kommentar";
+                worksheet.Cells[1, 1].Value = ExportNames.Date;
+                worksheet.Cells[1, 2].Value = ExportNames.Name;
+                worksheet.Cells[1, 3].Value = ExportNames.Racket;
+                worksheet.Cells[1, 4].Value = ExportNames.Stringing;
+                worksheet.Cells[1, 5].Value = ExportNames.Tension;
+                worksheet.Cells[1, 6].Value = ExportNames.Paid;
+                worksheet.Cells[1, 7].Value = ExportNames.Completed;
+                worksheet.Cells[1, 8].Value = ExportNames.Comment;
 
                 for (var i = 0; i < jobs.Length; i++)
                 {
@@ -46,7 +46,7 @@ namespace RacketStringManager.Services.Export
                     worksheet.Cells[row, 5].Value = job.Tension.ToString("F1");
                     worksheet.Cells[row, 6].Value = job.IsPaid ? 1 : 0;
                     worksheet.Cells[row, 7].Value = job.IsCompleted ? 1 : 0;
-                    worksheet.Cells[row, 6].Value = job.Comment;
+                    worksheet.Cells[row, 8].Value = job.Comment;
                 }
 
                 var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Export.xlsx");
