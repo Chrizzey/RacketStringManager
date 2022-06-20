@@ -24,6 +24,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IJobViewModelFactory, JobViewModelFactory>()
             .AddSingleton<IUiService, UiService>()
             .AddSingleton<INavigationService, NavigationService>()
+            .AddSingleton<IShare, ShareService>()
             .AddTransient<MainPage>()
             .AddSingleton<MainViewModel>();
        

@@ -13,18 +13,18 @@ namespace RacketStringManager.Services.Export
     public class ExcelExportService
     {
         private readonly IJobRepository _jobRepository;
+        private readonly IShare _share;
 
-        public ExcelExportService(IJobRepository jobRepository)
+        public ExcelExportService(IJobRepository jobRepository, IShare share)
         {
             _jobRepository = jobRepository;
-
+            _share = share;
         }
 
         public async Task Export()
         {
             try
             {
-
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using var package = new ExcelPackage();
 
@@ -59,6 +59,10 @@ namespace RacketStringManager.Services.Export
                 var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Export.xlsx");
 
                 await package.SaveAsAsync(path);
+
+                var request = new ShareFileRequest("Export.xlsx", new ShareFile(path));
+
+                await _share.RequestAsync(request);
             }
             catch (Exception ex)
             {
