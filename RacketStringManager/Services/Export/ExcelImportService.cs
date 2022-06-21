@@ -27,8 +27,11 @@ public class ExcelImportService : IDisposable
             if (!HasUserPickedAFile())
                 return;
 
+            var clearDbTask = ClearDatabase();
             await OpenFile();
             CreateImportMapping();
+
+            await clearDbTask;
             await ImportAllJobs();
         }
         catch (Exception ex)
