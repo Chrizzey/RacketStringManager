@@ -1,4 +1,5 @@
-﻿using OfficeOpenXml;
+﻿using System.Text;
+using OfficeOpenXml;
 using RacketStringManager.Model;
 using RacketStringManager.ViewModel.Components;
 
@@ -72,10 +73,10 @@ public class ExcelImportService : IDisposable
         for (var i = 1; i <= numberOfColumns; i++)
         {
             var value = _worksheet.Cells[1, i].Value?.ToString()?.ToLower();
-            if(string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
                 continue;
-            
-            if(_importMapping.ContainsKey(value))
+
+            if (_importMapping.ContainsKey(value))
                 _importMapping[value] = i;
         }
 
@@ -93,45 +94,46 @@ public class ExcelImportService : IDisposable
 
     private async Task ImportAllJobs()
     {
-        await Task.Run(() =>
+        await Task.Run(async () =>
         {
             var row = 1;
-                        
+
             foreach (var _ in _worksheet.Rows.Skip(2))
             {
                 row++;
-        
+
                 try
                 {
-                    var job = ImportJob(row);                    
+                    var job = ImportJob(row);
                     _jobService.Create(job);
                 }
-                catch(ImportException ex)
+                catch (ImportException ex)
                 {
-                    await Shell.DisplayNotification($"Import Error in Row {row}", ex.Message, "Ok");
+
+                    await Shell.Current.DisplayAlert($"Import Error in Row {row}", ex.Message, "Ok");
                 }
             }
-            
-            var actual = _jobService.GetAll().Count();
-            await Shell.DisplayNotification($"Successfully imported {actual}/{row} jobs", "Ok)
+
+            var actual = _jobService.GetAllJobs().Count();
+            await Shell.Current.DisplayAlert("Import Complete", $"Successfully imported {actual}/{row} jobs", "Ok");
         });
     }
 
     private Job ImportJob(int row)
     {
         var importErrors = new StringBuilder();
-    
+
         var tensionString = GetValue(row, ExportNames.Tension)?.ToString();
         if (!JobEditViewModel.ParseTension(tensionString, out var tension))
         {
             tension = 0d;
-            
-            if(string.isNullOrWihteSpace(tensionString))
+
+            if (string.IsNullOrWhiteSpace(tensionString))
                 importErrors.AppendLine("Tension is empty");
             else
                 importErrors.AppendLine($"Tension '{tensionString}' is not a valid number");
         }
-        
+
         var job = new Job
         {
             Name = GetValue(row, ExportNames.Name)?.ToString(),
@@ -143,12 +145,12 @@ public class ExcelImportService : IDisposable
             IsPaid = GetBooleanValue(row, ExportNames.Paid),
             IsCompleted = GetBooleanValue(row, ExportNames.Completed),
 
-            Tension = tension            
-        };   
-        
+            Tension = tension
+        };
+
         var dateString = GetValue(row, ExportNames.Date)?.ToString();
-        
-        if(string.IsNullOrWhiteSpace(dateString))
+
+        if (string.IsNullOrWhiteSpace(dateString))
         {
             importErrors.AppendLine("Date is empty");
         }
@@ -158,27 +160,41 @@ public class ExcelImportService : IDisposable
             {
                 job.StartDate = ParseDateOnly(dateString);
             }
-            catch(FormatException)
+            catch (FormatException)
             {
-                importErros.AppendLine($"Date '{dateString}' is not a valid date");
+                importErrors.AppendLine($"Date '{dateString}' is not a valid date");
             }
         }
-        
+
         ImportSanityCheck(job, importErrors);
-        
+
         return job;
     }
-    
+
+    private DateOnly ParseDateOnly(string date)
+    {
+        var formats = new[]
+        {
+            "d.M.yy",
+            "d.M.yyyy",
+            "M/d/yy",
+            "M/d/yyyy",
+            "yy-M-d",
+            "yyyy-M-d"
+        };
+        return DateOnly.ParseExact(date, formats);
+    }
+
     private void ImportSanityCheck(Job job, StringBuilder importErrors)
     {
-        if(string.IsNullOrWhiteSpace(job.Name))
+        if (string.IsNullOrWhiteSpace(job.Name))
             importErrors.AppendLine("Name is empty");
-        if(string.IsNullOrWhiteSpace(job.Racket))
+        if (string.IsNullOrWhiteSpace(job.Racket))
             importErrors.AppendLine("Racket is empty");
-        if(string.IsNullOrWhiteSpace(job.StringName))
+        if (string.IsNullOrWhiteSpace(job.StringName))
             importErrors.AppendLine("String is empty");
-        
-        if(importErrors.Length > 0)
+
+        if (importErrors.Length > 0)
             throw new ImportException(importErrors.ToString());
     }
 
@@ -187,15 +203,24 @@ public class ExcelImportService : IDisposable
         var column = _importMapping[name.ToLower()];
         return _worksheet.Cells[row, column].Value;
     }
-       
+
     private bool GetBooleanValue(int row, string name)
     {
-       return GetValue(row, name).Equals(1);
+        return GetValue(row, name).Equals(1);
     }
 
     public void Dispose()
     {
         _excelPackage?.Dispose();
         _worksheet?.Dispose();
+    }
+
+    internal class ImportException : Exception
+    {
+        public ImportException(string message)
+            : base(message)
+        {
+
+        }
     }
 }
