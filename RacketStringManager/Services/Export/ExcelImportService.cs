@@ -95,39 +95,91 @@ public class ExcelImportService : IDisposable
     {
         await Task.Run(() =>
         {
-            try
+            var row = 1;
+                        
+            foreach (var _ in _worksheet.Rows.Skip(2))
             {
-                var row = 1;
-                foreach (var _ in _worksheet.Rows.Skip(2))
+                row++;
+        
+                try
                 {
-                    row++;
-
-                    if (!JobEditViewModel.ParseTension(GetValue(row, ExportNames.Tension)?.ToString(), out var tension))
-                        tension = 0d;
-
-                    var job = new Job
-                    {
-                        Name = GetValue(row, ExportNames.Name)?.ToString() ?? "Kein Name",
-                        Racket = GetValue(row, ExportNames.Racket)?.ToString() ?? "Kein Schläger",
-
-                        StringName = GetValue(row, ExportNames.Stringing)?.ToString() ?? "Keine Saite",
-                        Comment = GetValue(row, ExportNames.Comment)?.ToString() ?? string.Empty,
-
-                        IsPaid = GetBooleanValue(row, ExportNames.Paid),
-                        IsCompleted = GetBooleanValue(row, ExportNames.Completed),
-
-                        Tension = tension,
-                        StartDate = new DateOnly()
-                    };
-                    
+                    var job = ImportJob(row);                    
                     _jobService.Create(job);
                 }
+                catch(ImportException ex)
+                {
+                    await Shell.DisplayNotification($"Import Error in Row {row}", ex.Message, "Ok");
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+            
+            var actual = _jobService.GetAll().Count();
+            await Shell.DisplayNotification($"Successfully imported {actual}/{row} jobs", "Ok)
         });
+    }
+
+    private Job ImportJob(int row)
+    {
+        var importErrors = new StringBuilder();
+    
+        var tensionString = GetValue(row, ExportNames.Tension)?.ToString();
+        if (!JobEditViewModel.ParseTension(tensionString, out var tension))
+        {
+            tension = 0d;
+            
+            if(string.isNullOrWihteSpace(tensionString))
+                importErrors.AppendLine("Tension is empty");
+            else
+                importErrors.AppendLine($"Tension '{tensionString}' is not a valid number");
+        }
+        
+        var job = new Job
+        {
+            Name = GetValue(row, ExportNames.Name)?.ToString(),
+            Racket = GetValue(row, ExportNames.Racket)?.ToString(),
+
+            StringName = GetValue(row, ExportNames.Stringing)?.ToString(),
+            Comment = GetValue(row, ExportNames.Comment)?.ToString() ?? string.Empty,
+
+            IsPaid = GetBooleanValue(row, ExportNames.Paid),
+            IsCompleted = GetBooleanValue(row, ExportNames.Completed),
+
+            Tension = tension            
+        };   
+        
+        var dateString = GetValue(row, ExportNames.Date)?.ToString();
+        
+        if(string.IsNullOrWhiteSpace(dateString))
+        {
+            importErrors.AppendLine("Date is empty");
+        }
+        else
+        {
+            try
+            {
+                job.StartDate = ParseDateOnly(dateString);
+            }
+            catch(FormatException)
+            {
+                importErros.AppendLine($"Date '{dateString}' is not a valid date");
+            }
+        }
+        
+        ImportSanityCheck(job, importErrors);
+        
+        return job;
+    }
+    
+    private void ImportSanityCheck(Job job, StringBuilder importErrors)
+    {
+        if(string.IsNullOrWhiteSpace(job.Name))
+            importErrors.AppendLine("Name is empty");
+        if(string.IsNullOrWhiteSpace(job.Racket))
+            importErrors.AppendLine("Racket is empty");
+        if(string.IsNullOrWhiteSpace(job.StringName))
+            importErrors.AppendLine("String is empty");
+        
+        if(importErrors.Length > 0)
+            throw new ImportException(importErrors.ToString());
     }
 
     private object GetValue(int row, string name)
@@ -135,8 +187,7 @@ public class ExcelImportService : IDisposable
         var column = _importMapping[name.ToLower()];
         return _worksheet.Cells[row, column].Value;
     }
-    
-
+       
     private bool GetBooleanValue(int row, string name)
     {
        return GetValue(row, name).Equals(1);
