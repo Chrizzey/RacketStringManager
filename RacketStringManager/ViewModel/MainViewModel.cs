@@ -4,8 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
 using RacketStringManager.Services;
 using RacketStringManager.Services.Export;
-using RacketStringManager.Services.Repository;
-using RacketStringManager.View;
 using Debug = System.Diagnostics.Debug;
 
 namespace RacketStringManager.ViewModel
