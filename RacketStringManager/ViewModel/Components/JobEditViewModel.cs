@@ -94,8 +94,14 @@ namespace RacketStringManager.ViewModel.Components
 
         private bool ParseTension()
         {
-            var tension = Tension?.Replace(",", ".");
-            return double.TryParse(tension, NumberStyles.Any, CultureInfo.InvariantCulture, out _tensionInKg);
+            return ParseTension(Tension, out _tensionInKg);
+        }
+
+        public static bool ParseTension(string value, out double tensionValue)
+        {
+            var tension = value?.Replace(",", ".");
+            return double.TryParse(tension, NumberStyles.Any, CultureInfo.InvariantCulture, out tensionValue);
+
         }
     }
 }

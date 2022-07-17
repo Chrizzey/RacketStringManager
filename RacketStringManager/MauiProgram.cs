@@ -1,4 +1,6 @@
-﻿using RacketStringManager.Services;
+﻿using OfficeOpenXml;
+using RacketStringManager.Services;
+using RacketStringManager.Services.Export;
 using RacketStringManager.Services.Repository;
 using RacketStringManager.View;
 using RacketStringManager.ViewModel;
@@ -31,7 +33,13 @@ public static class MauiProgram
             .AddPageWithViewModel<CreateJobPage, CreateJobViewModel>()
             .AddPageWithViewModel<EditJobPage, EditJobViewModel>()
             ;
-        
+
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        builder.Services.AddTransient<ExcelExportService>();
+        builder.Services.AddTransient<ExcelImportService>();
+        builder.Services.AddSingleton(x => Share.Default);
+        builder.Services.AddSingleton(x => FilePicker.Default);
+
         return builder.Build();
     }
 }

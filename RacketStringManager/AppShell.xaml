@@ -4,11 +4,23 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:RacketStringManager"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:views="clr-namespace:RacketStringManager.View">
 
-    <ShellContent
+    <FlyoutItem Title="Overview">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}"></ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="New Job">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:CreateJobPage}"></ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+    <!--<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="MainPage" />-->
 
 </Shell>

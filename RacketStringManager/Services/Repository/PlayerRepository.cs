@@ -23,6 +23,6 @@ public class PlayerRepository : DataRepository, IPlayerRepository
     {
         Database.DropTable<PlayerEntity>();
 
-        Database.CreateTable<StringEntity>();
+        Database.CreateTable<PlayerEntity>();
     }
 }

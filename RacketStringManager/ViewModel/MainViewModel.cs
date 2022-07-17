@@ -3,8 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
 using RacketStringManager.Services;
-using RacketStringManager.Services.Repository;
-using RacketStringManager.View;
+using RacketStringManager.Services.Export;
 using Debug = System.Diagnostics.Debug;
 
 namespace RacketStringManager.ViewModel
@@ -15,6 +14,8 @@ namespace RacketStringManager.ViewModel
         private readonly IJobViewModelFactory _jobViewModelFactory;
         private readonly IUiService _uiService;
         private readonly INavigationService _navigationService;
+        private readonly ExcelExportService _exportService;
+        private readonly ExcelImportService _importService;
 
         [ObservableProperty]
         private bool _showsOpenJobsOnly;
@@ -26,12 +27,14 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<JobListViewModel> Jobs { get; } = new();
 
-        public MainViewModel(IJobService jobService, IJobViewModelFactory jobViewModelFactory, IUiService uiService, INavigationService navigationService)
+        public MainViewModel(IJobService jobService, IJobViewModelFactory jobViewModelFactory, IUiService uiService, INavigationService navigationService, ExcelExportService exportService, ExcelImportService importService)
         {
             _jobService = jobService;
             _jobViewModelFactory = jobViewModelFactory;
             _uiService = uiService;
             _navigationService = navigationService;
+            _exportService = exportService;
+            _importService = importService;
             _showsOpenJobsOnly = true;
         }
 
@@ -88,6 +91,18 @@ namespace RacketStringManager.ViewModel
             {
                 IsBusy = false;
             }
+        }
+
+        [ICommand]
+        private async Task ExportDatabase()
+        {
+            await _exportService.Export();
+        }
+
+        [ICommand]
+        private async Task ImportDatabase()
+        {
+            await _importService.Import();
         }
     }
 }

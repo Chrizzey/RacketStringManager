@@ -21,7 +21,7 @@ public class StringingRepository : DataRepository, IStringingRepository
 
     public void Clear()
     {
-        Database.DropTable<PlayerEntity>();
+        Database.DropTable<StringEntity>();
 
         Database.CreateTable<StringEntity>();
     }

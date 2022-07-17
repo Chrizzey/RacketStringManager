@@ -6,14 +6,9 @@ namespace RacketStringManager.Services.Repository
     {
         public JobRepository()
         {
-            CreateTables();
-        }
-
-        private void CreateTables()
-        {
             Database.CreateTable<JobEntity>();
         }
-
+        
         public IEnumerable<JobEntity> GetAllJobs()
         {
             return Database.Table<JobEntity>().OrderByDescending(x => x.StartDate).ToArray();
@@ -62,8 +57,7 @@ namespace RacketStringManager.Services.Repository
         public void Clear()
         {
             Database.DropTable<JobEntity>();
-            
-            CreateTables();
+            Database.CreateTable<JobEntity>();
         }
     }
 }

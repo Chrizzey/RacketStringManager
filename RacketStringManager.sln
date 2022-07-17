@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RacketStringManager", "Rack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RacketStringManager.Tests", "RacketStringManager.Tests\RacketStringManager.Tests.csproj", "{D4796294-3EBB-48E6-A1DC-D7C22C27670E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{4396F44C-22EF-4FCB-8B85-6C91D95BB7A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{D4796294-3EBB-48E6-A1DC-D7C22C27670E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4796294-3EBB-48E6-A1DC-D7C22C27670E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4796294-3EBB-48E6-A1DC-D7C22C27670E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4396F44C-22EF-4FCB-8B85-6C91D95BB7A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4396F44C-22EF-4FCB-8B85-6C91D95BB7A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4396F44C-22EF-4FCB-8B85-6C91D95BB7A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4396F44C-22EF-4FCB-8B85-6C91D95BB7A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

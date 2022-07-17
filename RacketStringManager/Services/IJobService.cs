@@ -14,5 +14,6 @@ namespace RacketStringManager.Services
         IEnumerable<string> GetAllRacketsForPlayer(string playerName);
         void Update(Job job);
         void Delete(Job job);
+        void Clear();
     }
 }
