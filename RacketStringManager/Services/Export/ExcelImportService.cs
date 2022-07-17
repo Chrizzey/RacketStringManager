@@ -5,19 +5,21 @@ using RacketStringManager.ViewModel.Components;
 
 namespace RacketStringManager.Services.Export;
 
-public class ExcelImportService : IDisposable
+public class ExcelImportService : IDisposable, IExcelImportService
 {
     private readonly IFilePicker _picker;
     private readonly IJobService _jobService;
+    private readonly IUiService _uiService;
     private FileResult _pickResult;
     private ExcelPackage _excelPackage;
     private ExcelWorksheet _worksheet;
     private Dictionary<string, int> _importMapping;
 
-    public ExcelImportService(IFilePicker picker, IJobService jobService)
+    public ExcelImportService(IFilePicker picker, IJobService jobService, IUiService uiService)
     {
         _picker = picker;
         _jobService = jobService;
+        _uiService = uiService;
     }
 
     public async Task Import()
@@ -40,7 +42,7 @@ public class ExcelImportService : IDisposable
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Exception!", ex.Message, "Ok");
+            await _uiService.DisplayAlertAsync("Exception!", ex.Message, "Ok");
         }
     }
 

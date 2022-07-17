@@ -18,6 +18,12 @@
         </Tab>
     </FlyoutItem>
 
+    <FlyoutItem Title="Data Management">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:DataManagementView}"></ShellContent>
+        </Tab>
+    </FlyoutItem>
+
     <!--<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
