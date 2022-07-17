@@ -21,8 +21,8 @@ public class RacketRepository : DataRepository, IRacketRepository
 
     public void Clear()
     {
-        Database.DropTable<PlayerEntity>();
+        Database.DropTable<RacketEntity>();
 
-        Database.CreateTable<StringEntity>();
+        Database.CreateTable<RacketEntity>();
     }
 }
