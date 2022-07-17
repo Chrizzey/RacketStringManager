@@ -100,15 +100,7 @@ public class ExcelImportService : IDisposable
         await Task.Run(async () =>
         {
             for (var row = 2; row <= _worksheet.Dimension.Rows; row++)
-
-            //var row = 1;
-
-            //_worksheet.Dimension.Rows;
-
-            //foreach (var _ in _worksheet.Rows.Skip(2))
             {
-                //row++;
-
                 try
                 {
                     var job = ImportJob(row);
@@ -216,14 +208,5 @@ public class ExcelImportService : IDisposable
     {
         _excelPackage?.Dispose();
         _worksheet?.Dispose();
-    }
-
-    internal class ImportException : Exception
-    {
-        public ImportException(string message)
-            : base(message)
-        {
-
-        }
     }
 }
