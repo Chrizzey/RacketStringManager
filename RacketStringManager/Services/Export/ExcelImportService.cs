@@ -34,6 +34,9 @@ public class ExcelImportService : IDisposable
 
             await clearDbTask;
             await ImportAllJobs();
+
+            var actual = _jobService.GetAllJobs().Count();
+            await Shell.Current.DisplayAlert("Import Complete", $"Successfully imported {actual}/{_worksheet.Dimension.Rows - 1} jobs", "Ok");
         }
         catch (Exception ex)
         {
@@ -96,11 +99,15 @@ public class ExcelImportService : IDisposable
     {
         await Task.Run(async () =>
         {
-            var row = 1;
+            for (var row = 2; row <= _worksheet.Dimension.Rows; row++)
 
-            foreach (var _ in _worksheet.Rows.Skip(2))
+            //var row = 1;
+
+            //_worksheet.Dimension.Rows;
+
+            //foreach (var _ in _worksheet.Rows.Skip(2))
             {
-                row++;
+                //row++;
 
                 try
                 {
@@ -109,13 +116,9 @@ public class ExcelImportService : IDisposable
                 }
                 catch (ImportException ex)
                 {
-
                     await Shell.Current.DisplayAlert($"Import Error in Row {row}", ex.Message, "Ok");
                 }
             }
-
-            var actual = _jobService.GetAllJobs().Count();
-            await Shell.Current.DisplayAlert("Import Complete", $"Successfully imported {actual}/{row} jobs", "Ok");
         });
     }
 
@@ -206,7 +209,7 @@ public class ExcelImportService : IDisposable
 
     private bool GetBooleanValue(int row, string name)
     {
-        return GetValue(row, name).Equals(1);
+        return GetValue(row, name).ToString() == "1";
     }
 
     public void Dispose()
