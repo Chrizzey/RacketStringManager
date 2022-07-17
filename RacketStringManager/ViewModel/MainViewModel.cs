@@ -27,14 +27,12 @@ namespace RacketStringManager.ViewModel
 
         public ObservableCollection<JobListViewModel> Jobs { get; } = new();
 
-        public MainViewModel(IJobService jobService, IJobViewModelFactory jobViewModelFactory, IUiService uiService, INavigationService navigationService, ExcelExportService exportService, ExcelImportService importService)
+        public MainViewModel(IJobService jobService, IJobViewModelFactory jobViewModelFactory, IUiService uiService, INavigationService navigationService)
         {
             _jobService = jobService;
             _jobViewModelFactory = jobViewModelFactory;
             _uiService = uiService;
             _navigationService = navigationService;
-            _exportService = exportService;
-            _importService = importService;
             _showsOpenJobsOnly = true;
         }
 
@@ -91,18 +89,6 @@ namespace RacketStringManager.ViewModel
             {
                 IsBusy = false;
             }
-        }
-
-        [ICommand]
-        private async Task ExportDatabase()
-        {
-            await _exportService.Export();
-        }
-
-        [ICommand]
-        private async Task ImportDatabase()
-        {
-            await _importService.Import();
         }
     }
 }

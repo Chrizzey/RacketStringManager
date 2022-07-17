@@ -3,7 +3,7 @@
 
 namespace RacketStringManager.Services.Export
 {
-    public class ExcelExportService
+    public class ExcelExportService : IExcelExportService
     {
         private readonly IJobService _jobService;
         private readonly IShare _share;

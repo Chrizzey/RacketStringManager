@@ -25,6 +25,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<IJobViewModelFactory, JobViewModelFactory>()
             .AddSingleton<IUiService, UiService>()
             .AddSingleton<INavigationService, NavigationService>()
+            .AddSingleton<IExcelExportService, ExcelExportService>()
+            .AddSingleton<IExcelImportService, ExcelImportService>()
             .AddTransient<MainPage>()
             .AddSingleton<MainViewModel>();
        
@@ -32,6 +34,7 @@ public static class MauiProgram
             .AddPageWithViewModel<JobDetailsPage, JobDetailsViewModel>()
             .AddPageWithViewModel<CreateJobPage, CreateJobViewModel>()
             .AddPageWithViewModel<EditJobPage, EditJobViewModel>()
+            .AddPageWithViewModel<DataManagementView, DataManagementViewModel>()
             ;
 
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
