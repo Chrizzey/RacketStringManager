@@ -150,6 +150,21 @@
   <data name="DataManagement_Title" xml:space="preserve">
     <value>Data Management</value>
   </data>
+  <data name="ExcelImport_ErrorMessage_ErrorInRow" xml:space="preserve">
+    <value>Import error in row {0}</value>
+  </data>
+  <data name="ExcelImport_ExceptionPopup_Title" xml:space="preserve">
+    <value>Exception!</value>
+  </data>
+  <data name="ExcelImport_Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="ExcelImport_SuccessPopup_MessageFormat" xml:space="preserve">
+    <value>Successfully imported {0}/{1}</value>
+  </data>
+  <data name="ExcelImport_SuccessPopup_Title" xml:space="preserve">
+    <value>Import Complete</value>
+  </data>
   <data name="JobDetails_Comment" xml:space="preserve">
     <value>Comment</value>
     <comment>Additional comments for the job</comment>

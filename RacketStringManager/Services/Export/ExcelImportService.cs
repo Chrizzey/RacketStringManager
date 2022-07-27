@@ -10,16 +10,18 @@ public class ExcelImportService : IDisposable, IExcelImportService
     private readonly IFilePicker _picker;
     private readonly IJobService _jobService;
     private readonly IUiService _uiService;
+    private readonly ITranslationService _translationService;
     private FileResult _pickResult;
     private ExcelPackage _excelPackage;
     private ExcelWorksheet _worksheet;
     private Dictionary<string, int> _importMapping;
 
-    public ExcelImportService(IFilePicker picker, IJobService jobService, IUiService uiService)
+    public ExcelImportService(IFilePicker picker, IJobService jobService, IUiService uiService, ITranslationService translationService)
     {
         _picker = picker;
         _jobService = jobService;
         _uiService = uiService;
+        _translationService = translationService;
     }
 
     public async Task Import()
@@ -38,11 +40,17 @@ public class ExcelImportService : IDisposable, IExcelImportService
             await ImportAllJobs();
 
             var actual = _jobService.GetAllJobs().Count();
-            await Shell.Current.DisplayAlert("Import Complete", $"Successfully imported {actual}/{_worksheet.Dimension.Rows - 1} jobs", "Ok");
+            await _uiService.DisplayAlertAsync(
+                _translationService.GetTranslatedText("ExcelImport_SuccessPopup_Title"),
+                string.Format(_translationService.GetTranslatedText("ExcelImport_SuccessPopup_MessageFormat"), actual, _worksheet.Dimension.Rows-1),
+                _translationService.GetTranslatedText("ExcelImport_Ok"));
         }
         catch (Exception ex)
         {
-            await _uiService.DisplayAlertAsync("Exception!", ex.Message, "Ok");
+            await _uiService.DisplayAlertAsync(
+                _translationService.GetTranslatedText("ExcelImport_ExceptionPopup_Title"), 
+                ex.Message, 
+                _translationService.GetTranslatedText("ExcelImport_Ok"));
         }
     }
 
@@ -110,7 +118,10 @@ public class ExcelImportService : IDisposable, IExcelImportService
                 }
                 catch (ImportException ex)
                 {
-                    await Shell.Current.DisplayAlert($"Import Error in Row {row}", ex.Message, "Ok");
+                    await _uiService.DisplayAlertAsync(
+                        string.Format(_translationService.GetTranslatedText("ExcelImport_ErrorMessage_ErrorInRow"), row),
+                        ex.Message,
+                        _translationService.GetTranslatedText("ExcelImport_Ok"));
                 }
             }
         });
@@ -182,7 +193,7 @@ public class ExcelImportService : IDisposable, IExcelImportService
         return DateOnly.ParseExact(date, formats);
     }
 
-    private void ImportSanityCheck(Job job, StringBuilder importErrors)
+    private static void ImportSanityCheck(Job job, StringBuilder importErrors)
     {
         if (string.IsNullOrWhiteSpace(job.Name))
             importErrors.AppendLine("Name is empty");

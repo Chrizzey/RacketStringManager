@@ -150,6 +150,21 @@
   <data name="DataManagement_Title" xml:space="preserve">
     <value>Datenverwaltung</value>
   </data>
+  <data name="ExcelImport_ErrorMessage_ErrorInRow" xml:space="preserve">
+    <value>Kann Datensatz in Zeile {0} nicht lesen!</value>
+  </data>
+  <data name="ExcelImport_ExceptionPopup_Title" xml:space="preserve">
+    <value>Unerwarteter Fehler</value>
+  </data>
+  <data name="ExcelImport_Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ExcelImport_SuccessPopup_MessageFormat" xml:space="preserve">
+    <value>Es wurden {0} von {1} Einträgen erfolgreich importiert</value>
+  </data>
+  <data name="ExcelImport_SuccessPopup_Title" xml:space="preserve">
+    <value>Datei gelesen</value>
+  </data>
   <data name="JobDetails_Comment" xml:space="preserve">
     <value>Kommentar:</value>
     <comment>Zusatzkommentar zum Auftrag</comment>

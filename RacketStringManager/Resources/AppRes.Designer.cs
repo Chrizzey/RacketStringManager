@@ -160,6 +160,51 @@ namespace RacketStringManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import error in row {0}.
+        /// </summary>
+        internal static string ExcelImport_ErrorMessage_ErrorInRow {
+            get {
+                return ResourceManager.GetString("ExcelImport_ErrorMessage_ErrorInRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exception!.
+        /// </summary>
+        internal static string ExcelImport_ExceptionPopup_Title {
+            get {
+                return ResourceManager.GetString("ExcelImport_ExceptionPopup_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        internal static string ExcelImport_Ok {
+            get {
+                return ResourceManager.GetString("ExcelImport_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully imported {0}/{1}.
+        /// </summary>
+        internal static string ExcelImport_SuccessPopup_MessageFormat {
+            get {
+                return ResourceManager.GetString("ExcelImport_SuccessPopup_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Complete.
+        /// </summary>
+        internal static string ExcelImport_SuccessPopup_Title {
+            get {
+                return ResourceManager.GetString("ExcelImport_SuccessPopup_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comment.
         /// </summary>
         internal static string JobDetails_Comment {

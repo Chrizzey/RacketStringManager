@@ -27,6 +27,7 @@ public static class MauiProgram
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IExcelExportService, ExcelExportService>()
             .AddSingleton<IExcelImportService, ExcelImportService>()
+            .AddSingleton<ITranslationService, TranslationService>()
             .AddTransient<MainPage>()
             .AddSingleton<MainViewModel>();
        
