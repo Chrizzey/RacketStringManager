@@ -14,9 +14,7 @@ namespace RacketStringManager.ViewModel
         private readonly IJobViewModelFactory _jobViewModelFactory;
         private readonly IUiService _uiService;
         private readonly INavigationService _navigationService;
-        private readonly ExcelExportService _exportService;
-        private readonly ExcelImportService _importService;
-
+        
         [ObservableProperty]
         private bool _showsOpenJobsOnly;
 
@@ -81,8 +79,6 @@ namespace RacketStringManager.ViewModel
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-
-                // Todo: Abstract this UI call
                 await _uiService.DisplayAlertAsync("Error!", "Unable to load jobs from cache", "OK");
             }
             finally
