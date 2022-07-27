@@ -138,6 +138,18 @@
   <data name="CreateJob_Title" xml:space="preserve">
     <value>Neuer Auftrag</value>
   </data>
+  <data name="DataManagement_Description" xml:space="preserve">
+    <value>Hier kannst du alle Aufträge importieren und exportieren. Beim Import werden alle bestehenden Daten gelöscht und nur die neu Importierten Aufträge sind anschließend verfügbar</value>
+  </data>
+  <data name="DataManagement_ExportButtonText" xml:space="preserve">
+    <value>Exceldatei erstellen</value>
+  </data>
+  <data name="DataManagement_ImportButtonText" xml:space="preserve">
+    <value>Exceldatei einlesen</value>
+  </data>
+  <data name="DataManagement_Title" xml:space="preserve">
+    <value>Datenverwaltung</value>
+  </data>
   <data name="JobDetails_Comment" xml:space="preserve">
     <value>Kommentar:</value>
     <comment>Zusatzkommentar zum Auftrag</comment>

@@ -124,6 +124,42 @@ namespace RacketStringManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Here you can import and export all jobs. Note that when importing data, all existing data will be deleted and only the imported jobs are available after the import.
+        /// </summary>
+        internal static string DataManagement_Description {
+            get {
+                return ResourceManager.GetString("DataManagement_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to Excel.
+        /// </summary>
+        internal static string DataManagement_ExportButtonText {
+            get {
+                return ResourceManager.GetString("DataManagement_ExportButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import from Excel.
+        /// </summary>
+        internal static string DataManagement_ImportButtonText {
+            get {
+                return ResourceManager.GetString("DataManagement_ImportButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Management.
+        /// </summary>
+        internal static string DataManagement_Title {
+            get {
+                return ResourceManager.GetString("DataManagement_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comment.
         /// </summary>
         internal static string JobDetails_Comment {

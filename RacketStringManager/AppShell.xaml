@@ -3,30 +3,25 @@
     x:Class="RacketStringManager.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:RacketStringManager.Resources"
     xmlns:local="clr-namespace:RacketStringManager"
     xmlns:views="clr-namespace:RacketStringManager.View">
 
-    <FlyoutItem Title="Overview">
+    <FlyoutItem Title="{x:Static res:AppRes.Overview_Title}">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}"></ShellContent>
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="New Job">
+    <FlyoutItem Title="{x:Static res:AppRes.CreateJob_Title}">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate views:CreateJobPage}"></ShellContent>
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="Data Management">
+    <FlyoutItem Title="{x:Static res:AppRes.DataManagement_Title}">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate views:DataManagementView}"></ShellContent>
         </Tab>
     </FlyoutItem>
-
-    <!--<ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />-->
-
 </Shell>
