@@ -52,7 +52,7 @@
         <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
                            HorizontalOptions="FillAndExpand"
                            VerticalOptions="CenterAndExpand"
-                           Grid.RowSpan="2"
+                           Grid.RowSpan="4"
                            Grid.ColumnSpan="2"></ActivityIndicator>
     </Grid>
 </ContentPage>

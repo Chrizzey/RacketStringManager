@@ -9,6 +9,11 @@ namespace RacketStringManager.ViewModel
         private readonly IExcelExportService _exportService;
         private readonly IExcelImportService _importService;
 
+        [ObservableProperty,
+         AlsoNotifyChangeFor(nameof(IsIdle))]
+        private bool _isBusy;
+        public bool IsIdle => !_isBusy;
+
         public DataManagementViewModel(IExcelExportService exportService, IExcelImportService importService)
         {
             _exportService = exportService;
@@ -18,13 +23,31 @@ namespace RacketStringManager.ViewModel
         [ICommand]
         private async Task ExportDatabase()
         {
-            await _exportService.Export();
+            IsBusy = true;
+
+            try
+            {
+                await _exportService.Export();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         [ICommand]
         private async Task ImportDatabase()
         {
-            await _importService.Import();
+            IsBusy = true;
+            
+            try
+            {
+                await _importService.Import();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

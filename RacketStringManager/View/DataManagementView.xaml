@@ -4,13 +4,31 @@
              x:Class="RacketStringManager.View.DataManagementView"
              xmlns:res="clr-namespace:RacketStringManager.Resources"
              Title="DataManagementView">
-    <VerticalStackLayout>
-        <Label 
-            Text="{x:Static res:AppRes.DataManagement_Description}"
-            VerticalOptions="Center" Margin="10"
-            HorizontalOptions="Center" />
+    <Grid>
+        <VerticalStackLayout Grid.Column="0" Grid.Row="0">
+            <Label 
+                Text="{x:Static res:AppRes.DataManagement_Description}"
+                VerticalOptions="Center" Margin="10"
+                HorizontalOptions="Center" />
 
-        <Button Margin="5" Command="{Binding ExportDatabaseCommand}" Text="{x:Static res:AppRes.DataManagement_ExportButtonText}"></Button>
-        <Button Margin="5" Command="{Binding ImportDatabaseCommand}" Text="{x:Static res:AppRes.DataManagement_ImportButtonText}"></Button>
-    </VerticalStackLayout>
+            <Button 
+                Margin="5" 
+                Command="{Binding ExportDatabaseCommand}" 
+                Text="{x:Static res:AppRes.DataManagement_ExportButtonText}"
+                IsEnabled="{Binding IsIdle}"
+                ></Button>
+            <Button 
+                Margin="5" 
+                Command="{Binding ImportDatabaseCommand}" 
+                Text="{x:Static res:AppRes.DataManagement_ImportButtonText}"
+                IsEnabled="{Binding IsIdle}"
+                ></Button>
+        </VerticalStackLayout>
+
+        <ActivityIndicator IsRunning="true" IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.Row="0"
+                           Grid.Column="0"></ActivityIndicator>
+    </Grid>
 </ContentPage>
