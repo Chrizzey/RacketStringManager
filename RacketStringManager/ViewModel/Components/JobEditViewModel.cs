@@ -4,6 +4,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
+using RacketStringManager.Resources;
 using RacketStringManager.Services;
 
 namespace RacketStringManager.ViewModel.Components
@@ -69,7 +70,14 @@ namespace RacketStringManager.ViewModel.Components
             {
                 var strings = _jobService.GetAllStringNames().ToArray();
 
-                var selected = await Shell.Current.DisplayActionSheet("Auswahl", "Abbrechen", "Ok", strings);
+                var title = AppRes.SelectionTitle;
+                var cancel = AppRes.JobDetails_DeleteConfirm_Cancel;
+                var selected = await Shell.Current.DisplayActionSheet(title, cancel, null, strings);
+
+                if (selected == cancel)
+                {
+                    return;
+                }
 
                 StringName = selected;
             }

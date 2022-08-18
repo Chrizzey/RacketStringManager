@@ -365,5 +365,14 @@ namespace RacketStringManager.Resources {
                 return ResourceManager.GetString("Overview_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selection.
+        /// </summary>
+        internal static string SelectionTitle {
+            get {
+                return ResourceManager.GetString("SelectionTitle", resourceCulture);
+            }
+        }
     }
 }

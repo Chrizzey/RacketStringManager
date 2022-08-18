@@ -229,4 +229,7 @@
     <value>Übersicht</value>
     <comment>Titel der Hauptseite</comment>
   </data>
+  <data name="SelectionTitle" xml:space="preserve">
+    <value>Auswahl</value>
+  </data>
 </root>

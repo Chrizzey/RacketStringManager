@@ -1,8 +1,5 @@
-﻿using System.Collections.ObjectModel;
-using System.Globalization;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using RacketStringManager.Model;
 using RacketStringManager.Services;
 using RacketStringManager.ViewModel.Components;
 
