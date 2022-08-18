@@ -331,6 +331,15 @@ namespace RacketStringManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Job Details.
+        /// </summary>
+        internal static string JobDetails_Title {
+            get {
+                return ResourceManager.GetString("JobDetails_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
         internal static string Overview_AllJobs {
