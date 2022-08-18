@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
-using RacketStringManager.View;
 
 namespace RacketStringManager.ViewModel
 {
@@ -15,6 +14,9 @@ namespace RacketStringManager.ViewModel
 
         [ObservableProperty]
         private string _stringName;
+
+        [ObservableProperty] 
+        private string _playerName;
 
         [ObservableProperty]
         private double _tension;
@@ -32,6 +34,7 @@ namespace RacketStringManager.ViewModel
             _job = job;
             _date = _job.StartDate;
             _stringName = _job.StringName;
+            _playerName = _job.Name;
             _tension = _job.Tension;
             _comment = _job.Comment;
         }
