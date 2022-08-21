@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RacketStringManager.View.DataManagementView"
              xmlns:res="clr-namespace:RacketStringManager.Resources"
-             Title="DataManagementView">
+             Title="{x:Static res:AppRes.DataManagement_Title}">
     <Grid>
         <VerticalStackLayout Grid.Column="0" Grid.Row="0">
             <Label 

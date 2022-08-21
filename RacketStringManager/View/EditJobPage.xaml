@@ -5,7 +5,7 @@
              xmlns:res="clr-namespace:RacketStringManager.Resources"
              xmlns:com="clr-namespace:RacketStringManager.View.Components"
              xmlns:viewModel="clr-namespace:RacketStringManager.ViewModel"
-             Title="EditJobPage">
+             Title="{x:Static res:AppRes.EditJobPage_Title}">
     <StackLayout>
         <com:JobEditView BindingContext="{Binding EditViewModel}"></com:JobEditView>
         <Grid ColumnDefinitions="*,Auto,*,Auto" ColumnSpacing="10">

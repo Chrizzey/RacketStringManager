@@ -150,6 +150,9 @@
   <data name="DataManagement_Title" xml:space="preserve">
     <value>Data Management</value>
   </data>
+  <data name="EditJobPage_Title" xml:space="preserve">
+    <value>Edit Job</value>
+  </data>
   <data name="ExcelImport_ErrorMessage_ErrorInRow" xml:space="preserve">
     <value>Import error in row {0}</value>
   </data>

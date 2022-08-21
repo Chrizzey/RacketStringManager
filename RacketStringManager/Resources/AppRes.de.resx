@@ -150,6 +150,9 @@
   <data name="DataManagement_Title" xml:space="preserve">
     <value>Datenverwaltung</value>
   </data>
+  <data name="EditJobPage_Title" xml:space="preserve">
+    <value>Auftrag Bearbeiten</value>
+  </data>
   <data name="ExcelImport_ErrorMessage_ErrorInRow" xml:space="preserve">
     <value>Kann Datensatz in Zeile {0} nicht lesen!</value>
   </data>

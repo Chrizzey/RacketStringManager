@@ -160,6 +160,15 @@ namespace RacketStringManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Job.
+        /// </summary>
+        internal static string EditJobPage_Title {
+            get {
+                return ResourceManager.GetString("EditJobPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import error in row {0}.
         /// </summary>
         internal static string ExcelImport_ErrorMessage_ErrorInRow {
