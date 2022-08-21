@@ -1,6 +1,5 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using RacketStringManager.Model;
 
 namespace RacketStringManager.ViewModel
@@ -17,6 +16,9 @@ namespace RacketStringManager.ViewModel
 
         [ObservableProperty] 
         private string _playerName;
+
+        [ObservableProperty] 
+        private string _racket;
 
         [ObservableProperty]
         private double _tension;
@@ -37,6 +39,7 @@ namespace RacketStringManager.ViewModel
             _playerName = _job.Name;
             _tension = _job.Tension;
             _comment = _job.Comment;
+            _racket = _job.Racket;
         }
 
         public string GetRacket() => _job.Racket;

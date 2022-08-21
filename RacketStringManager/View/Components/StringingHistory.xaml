@@ -13,13 +13,15 @@
                                 Command="{Binding Command}"
                                 />
                         </Frame.GestureRecognizers>
-                        <Grid ColumnSpacing="15"  ColumnDefinitions="Auto,*,*" RowSpacing="8"  RowDefinitions="Auto, Auto, Auto">
-                            <Label Grid.Column="0" Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}"></Label>
-                            <Label Grid.Column="1" Text="{Binding StringName}"></Label>
-                            <Label Grid.Column="2" Text="{Binding Tension, StringFormat='{0:F1} kg'}"></Label>
+                        <Grid ColumnSpacing="15"  ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="8"  RowDefinitions="Auto, Auto, Auto">
+                            <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"  Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}"></Label>
+                            <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0"  Text="{Binding StringName}"></Label>
+                            <Label Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="0"  Text="{Binding Tension, StringFormat='{0:F1} kg'}"></Label>
                             
-                            <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Text="{Binding PlayerName}" HorizontalOptions="Center"></Label>
-                            <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Text="{Binding Comment}" IsVisible="{Binding HasComment}"></Label>
+                            <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Text="{Binding PlayerName}"></Label>
+                            <Label Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="1" Text="{Binding Racket}"></Label>
+
+                            <Label Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="2" Text="{Binding Comment}" IsVisible="{Binding HasComment}"></Label>
                         </Grid>
                     </Frame>
                 </DataTemplate>
