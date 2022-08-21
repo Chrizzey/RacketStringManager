@@ -188,7 +188,13 @@ public class ExcelImportService : IDisposable, IExcelImportService
             "M/d/yy",
             "M/d/yyyy",
             "yy-M-d",
-            "yyyy-M-d"
+            "yyyy-M-d",
+            "d.M.yy HH:mm:ss",
+            "d.M.yyyy HH:mm:ss",
+            "M/d/yy HH:mm:ss",
+            "M/d/yyyy HH:mm:ss",
+            "yy-M-d HH:mm:ss",
+            "yyyy-M-d HH:mm:ss"
         };
         return DateOnly.ParseExact(date, formats);
     }
