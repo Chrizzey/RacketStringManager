@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:RacketStringManager.ViewModel"
              x:Class="RacketStringManager.View.Components.StringingHistory">
-    <StackLayout>
-        <CollectionView ItemsSource="{Binding .}" Margin="5">
+    <CollectionView ItemsSource="{Binding .}" Margin="5">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:StringingHistoryViewModel">
                     <Frame HorizontalOptions="Fill" Padding="25,10,5,10" Margin="0,1">
@@ -26,5 +25,4 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </StackLayout>
 </ContentView>

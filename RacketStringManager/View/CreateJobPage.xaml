@@ -27,9 +27,9 @@
             </Setter>
         </Style>
     </ContentPage.Resources>
-    <VerticalStackLayout>
-        <com:JobEditView BindingContext="{Binding JobEditViewModel}"></com:JobEditView>
-        <Button Margin="5" Command="{Binding SaveCommand}" Text="{x:Static res:AppRes.CreateJob_Save}" IsEnabled="{Binding JobEditViewModel.CanSave}"></Button>
-        <com:StringingHistory BindingContext="{Binding JobEditViewModel.History}"></com:StringingHistory>
-    </VerticalStackLayout>
+    <Grid RowDefinitions="Auto, Auto, *">
+        <com:JobEditView Grid.Row="0" BindingContext="{Binding JobEditViewModel}"></com:JobEditView>
+        <Button Grid.Row="1"  Margin="5" Command="{Binding SaveCommand}" Text="{x:Static res:AppRes.CreateJob_Save}" IsEnabled="{Binding JobEditViewModel.CanSave}"></Button>
+        <com:StringingHistory Grid.Row="2"  BindingContext="{Binding JobEditViewModel.History}"></com:StringingHistory>
+    </Grid>
 </ContentPage>
