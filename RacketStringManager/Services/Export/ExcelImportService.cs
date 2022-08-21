@@ -42,14 +42,14 @@ public class ExcelImportService : IDisposable, IExcelImportService
             var actual = _jobService.GetAllJobs().Count();
             await _uiService.DisplayAlertAsync(
                 _translationService.GetTranslatedText("ExcelImport_SuccessPopup_Title"),
-                string.Format(_translationService.GetTranslatedText("ExcelImport_SuccessPopup_MessageFormat"), actual, _worksheet.Dimension.Rows-1),
+                string.Format(_translationService.GetTranslatedText("ExcelImport_SuccessPopup_MessageFormat"), actual, _worksheet.Dimension.Rows - 1),
                 _translationService.GetTranslatedText("ExcelImport_Ok"));
         }
         catch (Exception ex)
         {
             await _uiService.DisplayAlertAsync(
-                _translationService.GetTranslatedText("ExcelImport_ExceptionPopup_Title"), 
-                ex.Message, 
+                _translationService.GetTranslatedText("ExcelImport_ExceptionPopup_Title"),
+                ex.Message,
                 _translationService.GetTranslatedText("ExcelImport_Ok"));
         }
     }
@@ -111,6 +111,11 @@ public class ExcelImportService : IDisposable, IExcelImportService
         {
             for (var row = 2; row <= _worksheet.Dimension.Rows; row++)
             {
+                if (IsRowEmpty(row))
+                {
+                    continue;
+                }
+
                 try
                 {
                     var job = ImportJob(row);
@@ -125,6 +130,17 @@ public class ExcelImportService : IDisposable, IExcelImportService
                 }
             }
         });
+    }
+
+    private bool IsRowEmpty(int row)
+    {
+        for (var i = 1; i < _worksheet.Dimension.Columns; i++)
+        {
+            if (!string.IsNullOrWhiteSpace(_worksheet.Cells[row, i].Value?.ToString()))
+                return false;
+        }
+
+        return true;
     }
 
     private Job ImportJob(int row)
@@ -188,7 +204,13 @@ public class ExcelImportService : IDisposable, IExcelImportService
             "M/d/yy",
             "M/d/yyyy",
             "yy-M-d",
-            "yyyy-M-d"
+            "yyyy-M-d",
+            "d.M.yy HH:mm:ss",
+            "d.M.yyyy HH:mm:ss",
+            "M/d/yy HH:mm:ss",
+            "M/d/yyyy HH:mm:ss",
+            "yy-M-d HH:mm:ss",
+            "yyyy-M-d HH:mm:ss"
         };
         return DateOnly.ParseExact(date, formats);
     }
@@ -214,7 +236,7 @@ public class ExcelImportService : IDisposable, IExcelImportService
 
     private bool GetBooleanValue(int row, string name)
     {
-        return GetValue(row, name).ToString() == "1";
+        return GetValue(row, name)?.ToString() == "1";
     }
 
     public void Dispose()
